@@ -15,7 +15,7 @@ toothpick {
     nmsPackage = "1_16_R3"
     nmsRevision = "R0.1-SNAPSHOT"
 
-    upstream = "paper"
+    upstream = "Paper"
     upstreamBranch = "origin/master"
 
     paperclipName = "Yatopia-launcher.jar"
