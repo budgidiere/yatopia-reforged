@@ -21,7 +21,6 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
     var uptreamCommit = getUpstreamCommitHash()
 
     private fun getUpstreamCommitHash(): String {
-        System.out.println("hi1")
         val commitFileFoler = Path.of("$rootProjectDir/upstreamCommits")
         val commitFilePath = Path.of("$commitFileFoler/$name")
         val commitFile = commitFilePath.toFile()
