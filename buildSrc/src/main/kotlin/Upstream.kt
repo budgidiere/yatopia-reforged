@@ -7,6 +7,6 @@ class Uptream(in_name: String, in_useBlackList: Boolean, in_list: ArrayList<Stri
     var list: ArrayList<String>? = in_list
     private var rootProjectDir: File = in_rootProjectDir
 
-    var patchPath = Path.of("$rootProjectDir/patches/$name")
+    var patchPath = Path.of("$rootProjectDir/patches/$name/patches")
     var repoPath = Path.of("$rootProjectDir/upstream/$name")
 }
