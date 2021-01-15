@@ -9,12 +9,34 @@ import taskGroup
 import temporarilyDisableGitSigning
 import toothpick
 import java.nio.file.Files
+import upstreams
+import rootProjectDir
+import java.nio.file.Path
+import forkName
 
 internal fun Project.createApplyPatchesTask(
     receiver: Task.() -> Unit = {}
 ): Task = tasks.create("applyPatches") {
     receiver(this)
     group = taskGroup
+    fun applyPatches(patchDir: Path, applyName: String, name: String, wasGitSigningEnabled: Boolean): Boolean {
+        val patchPaths = Files.newDirectoryStream(patchDir)
+            .map { it.toFile() }
+            .filter { it.name.endsWith(".patch") }
+            .sorted()
+            .takeIf { it.isNotEmpty() } ?: return true
+        val patches = patchPaths.map { it.absolutePath }.toTypedArray()
+
+
+        logger.lifecycle(">>> Applying $applyName patches to $name")
+
+        val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace", *patches)
+        ensureSuccess(gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true)) {
+            if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
+        }
+        return false;
+    }
+
     doLast {
         for ((name, subproject) in toothpick.subprojects) {
             val (sourceRepo, projectDir, patchesDir) = subproject
@@ -29,22 +51,17 @@ internal fun Project.createApplyPatchesTask(
             }
             logger.lifecycle(">>> Done resetting subproject $name")
 
-            // Apply patches
-            val patchPaths = Files.newDirectoryStream(patchesDir.toPath())
-                .map { it.toFile() }
-                .filter { it.name.endsWith(".patch") }
-                .sorted()
-                .takeIf { it.isNotEmpty() } ?: continue
-            val patches = patchPaths.map { it.absolutePath }.toTypedArray()
-
             val wasGitSigningEnabled = temporarilyDisableGitSigning(projectDir)
 
-            logger.lifecycle(">>> Applying patches to $name")
+            for (upstream in upstreams) {
+                // Apply patches
+                val patchDir = Path.of(rootProjectDir.toString() + "/" + upstream + "/patches/" + (if (patchesDir.endsWith("server")) "server" else "api"))
 
-            val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace", *patches)
-            ensureSuccess(gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true)) {
-                if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
+                if (applyPatches(patchDir, upstream, name, wasGitSigningEnabled)) continue
             }
+            val patchDir = patchesDir.toPath()
+            // Apply patches
+            if (applyPatches(patchDir, forkName, name, wasGitSigningEnabled)) continue
 
             if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
             logger.lifecycle(">>> Done applying patches to $name")

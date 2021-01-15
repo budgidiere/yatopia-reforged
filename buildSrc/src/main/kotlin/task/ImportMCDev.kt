@@ -9,6 +9,9 @@ import nmsImports
 import org.gradle.api.Project
 import org.gradle.api.Task
 import toothpick
+import upstreams
+import java.io.File
+import rootProjectDir
 
 internal fun Project.createImportMCDevTask(
     receiver: Task.() -> Unit = {}
@@ -39,6 +42,23 @@ internal fun Project.createImportMCDevTask(
         source.copyTo(target)
     }
 
+    fun getAndApplyNMS(patchesDir: File) {
+        (patchesDir.listFiles() ?: error("No patches in server?")).asSequence()
+            .flatMap { it.readLines().asSequence() }
+            .filter { it.startsWith("+++ b/src/main/java/net/minecraft/server/") }
+            .distinct()
+            .map { it.substringAfter("/server/").substringBefore(".java") }
+            .filter { !upstreamServer.resolve("src/main/java/net/minecraft/server/$it.java").exists() }
+            .map { toothpick.paperWorkDir.resolve("spigot/net/minecraft/server/$it.java") }
+            .filter {
+                val exists = it.exists()
+                if (!it.exists()) logger.lifecycle("NMS ${it.nameWithoutExtension} is either missing, or is a new file added through a patch")
+                exists
+            }
+            .map { it.nameWithoutExtension }
+            .forEach(::importNMS)
+    }
+
     doLast {
         logger.lifecycle(">>> Importing mc-dev")
         val lastCommitIsMCDev = gitCmd(
@@ -54,21 +74,14 @@ internal fun Project.createImportMCDevTask(
                 )
             )
         }
+        for (upstream in upstreams) {
+            val patchesDir = rootProject.projectDir.resolve(rootProjectDir.toString() + "/" + upstream + "/patches/server")
+            getAndApplyNMS(patchesDir)
+        }
 
-        (toothpick.serverProject.patchesDir.listFiles() ?: error("No patches in server?")).asSequence()
-            .flatMap { it.readLines().asSequence() }
-            .filter { it.startsWith("+++ b/src/main/java/net/minecraft/server/") }
-            .distinct()
-            .map { it.substringAfter("/server/").substringBefore(".java") }
-            .filter { !upstreamServer.resolve("src/main/java/net/minecraft/server/$it.java").exists() }
-            .map { toothpick.paperWorkDir.resolve("spigot/net/minecraft/server/$it.java") }
-            .filter {
-                val exists = it.exists()
-                if (!it.exists()) logger.lifecycle("NMS ${it.nameWithoutExtension} is either missing, or is a new file added through a patch")
-                exists
-            }
-            .map { it.nameWithoutExtension }
-            .forEach(::importNMS)
+        val patchesDir = toothpick.serverProject.patchesDir
+        getAndApplyNMS(patchesDir)
+
 
         // Imports from MCDevImports.kt
         nmsImports.forEach(::importNMS)
