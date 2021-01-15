@@ -1,3 +1,7 @@
 [submodule "Paper"]
 	path = Paper
 	url = https://github.com/PaperMC/Paper.git
+[submodule "upstream/Tuinity"]
+	path = upstream/Tuinity
+	url = https://github.com/Spottedleaf/Tuinity
+	branch = dev/lighting
