@@ -59,3 +59,4 @@ yatopia-launcher.jar
 *clip.jar
 last-paper
 !upstreamConfig/*
+!upstreamCommits/*

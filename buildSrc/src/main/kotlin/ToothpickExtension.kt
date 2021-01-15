@@ -1,7 +1,10 @@
 import org.gradle.api.Project
 import org.gradle.api.model.ObjectFactory
 import java.io.File
-import java.util.Locale
+import java.io.FileInputStream
+import java.lang.Boolean
+import java.util.*
+import kotlin.collections.ArrayList
 
 @Suppress("UNUSED_PARAMETER")
 open class ToothpickExtension(objects: ObjectFactory) {
@@ -56,4 +59,21 @@ open class ToothpickExtension(objects: ObjectFactory) {
 
     val paperWorkDir: File
         get() = paperDir.resolve("work/Minecraft/${minecraftVersion}")
+
+    fun getUpstreams(rootProjectDir: File): ArrayList<Upstream> {
+        val configDir = rootProjectDir.resolve("$rootProjectDir/upstreamConfig")
+        val upstreams = configDir.listFiles()
+        val uptreamArray = ArrayList<Upstream>()
+        val prop = Properties()
+        for (upstream in upstreams) {
+            prop.load(FileInputStream(upstream))
+            uptreamArray.add(Upstream(prop.getProperty("name"),
+                Boolean.parseBoolean(prop.getProperty("useBlackList")),
+                (if (prop.getProperty("list").equals("null")) null
+                else Arrays.asList(prop.getProperty("list").split(",".toRegex()).toTypedArray())
+                        as ArrayList<String>),
+                rootProjectDir, project))
+        }
+        return uptreamArray;
+    }
 }
