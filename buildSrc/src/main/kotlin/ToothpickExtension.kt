@@ -17,9 +17,6 @@ open class ToothpickExtension(objects: ObjectFactory) {
     lateinit var nmsPackage: String
 
     lateinit var upstream: String
-
-    lateinit var upstreams: Array<String>
-    lateinit var sidestreams: Array<String>
     val upstreamLowercase
         get() = upstream.toLowerCase(Locale.ENGLISH)
     var upstreamBranch: String = "origin/master"

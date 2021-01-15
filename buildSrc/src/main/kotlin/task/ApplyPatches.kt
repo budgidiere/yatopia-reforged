@@ -55,9 +55,9 @@ internal fun Project.createApplyPatchesTask(
 
             for (upstream in upstreams) {
                 // Apply patches
-                val patchDir = Path.of(rootProjectDir.toString() + "/" + upstream + "/patches/" + (if (patchesDir.endsWith("server")) "server" else "api"))
+                val patchDir = Path.of("${upstream.patchPath}/${(if (patchesDir.endsWith("server")) "server" else "api")}")
 
-                if (applyPatches(patchDir, upstream, name, wasGitSigningEnabled)) continue
+                if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled)) continue
             }
             val patchDir = patchesDir.toPath()
             // Apply patches

@@ -75,7 +75,7 @@ internal fun Project.createImportMCDevTask(
             )
         }
         for (upstream in upstreams) {
-            val patchesDir = rootProject.projectDir.resolve(rootProjectDir.toString() + "/" + upstream + "/patches/server")
+            val patchesDir = rootProject.projectDir.resolve("${upstream.patchPath}/server")
             getAndApplyNMS(patchesDir)
         }
 

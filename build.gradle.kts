@@ -20,9 +20,6 @@ toothpick {
 
     paperclipName = "Yatopia-launcher.jar"
 
-    upstreams = arrayOf("Tuinity")
-    sidestreams = arrayOf("Empirecraft", "Origami")
-
     server {
         project = project(":$forkNameLowercase-server")
         patchesDir = rootProject.projectDir.resolve("patches/server")
