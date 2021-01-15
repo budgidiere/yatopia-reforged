@@ -28,3 +28,12 @@ val Project.upstreamDir: File
 
 val Project.projectPath: Path
     get() = projectDir.toPath()
+
+val Project.upstreams: Array<String>
+    get() = toothpick.upstreams
+
+val Project.sidestreams: Array<String>
+    get() = toothpick.sidestreams
+
+val Project.forkName: String
+    get() = toothpick.forkName
