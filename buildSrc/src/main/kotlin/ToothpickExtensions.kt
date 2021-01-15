@@ -30,7 +30,9 @@ fun getUpstreams(rootProjectDir: File): ArrayList<Uptream> {
         prop.load(FileInputStream(upstream))
         uptreamArray.add(Uptream(prop.getProperty("name"),
             Boolean.parseBoolean(prop.getProperty("useBlackList")),
-            Arrays.asList(prop.getProperty("list").split(",".toRegex()).toTypedArray()) as ArrayList<String>,
+            (if (prop.getProperty("list").equals("null")) null
+            else Arrays.asList(prop.getProperty("list").split(",".toRegex()).toTypedArray())
+                    as ArrayList<String>),
             rootProjectDir))
     }
     return uptreamArray;
