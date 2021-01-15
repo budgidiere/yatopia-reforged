@@ -70,8 +70,8 @@ open class ToothpickExtension(objects: ObjectFactory) {
             uptreamArray.add(Upstream(prop.getProperty("name"),
                 Boolean.parseBoolean(prop.getProperty("useBlackList")),
                 (if (prop.getProperty("list").equals("null")) null
-                else Arrays.asList(prop.getProperty("list").split(",".toRegex()).toTypedArray())
-                        as ArrayList<String>),
+                else try {Arrays.asList(prop.getProperty("list").split(",".toRegex()).toTypedArray())
+                        as ArrayList<String>} catch (e: Exception) {null}),
                 rootProjectDir, project))
         }
         return uptreamArray;
