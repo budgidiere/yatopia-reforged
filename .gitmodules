@@ -5,3 +5,7 @@
 	path = upstream/Tuinity
 	url = https://github.com/Spottedleaf/Tuinity
 	branch = dev/lighting
+[submodule "Yatopia-API"]
+	path = Yatopia-API
+[submodule "Yatopia-Server"]
+	path = Yatopia-Server
