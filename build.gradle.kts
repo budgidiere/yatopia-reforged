@@ -41,7 +41,7 @@ subprojects {
 
     java {
         if(JavaVersion.VERSION_1_8 > JavaVersion.current()){
-            error("This build must be run with java 8")
+            error("This build must be run with java 8 or better")
         }
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.current()
