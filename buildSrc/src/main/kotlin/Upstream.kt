@@ -48,5 +48,5 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
         return commitHash
     }
 
-    public fun Project.getCommitHash(): String = gitHash(repo = repoPath.toFile())
+    private fun Project.getCommitHash(): String = gitHash(repo = repoPath.toFile())
 }
