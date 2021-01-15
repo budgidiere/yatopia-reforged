@@ -3,9 +3,6 @@ import java.io.File
 import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.*
-import kotlin.collections.ArrayList
-import kotlin.streams.asSequence
 
 open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayList<String>?, in_rootProjectDir: File, in_project: Project) {
     var name: String = in_name

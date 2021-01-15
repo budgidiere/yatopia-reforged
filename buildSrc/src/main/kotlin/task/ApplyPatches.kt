@@ -1,6 +1,7 @@
 package task
 
 import ensureSuccess
+import forkName
 import gitCmd
 import org.gradle.api.Project
 import org.gradle.api.Task
@@ -8,11 +9,9 @@ import reEnableGitSigning
 import taskGroup
 import temporarilyDisableGitSigning
 import toothpick
-import java.nio.file.Files
 import upstreams
-import rootProjectDir
+import java.nio.file.Files
 import java.nio.file.Path
-import forkName
 
 internal fun Project.createApplyPatchesTask(
     receiver: Task.() -> Unit = {}

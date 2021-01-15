@@ -1,6 +1,6 @@
 import org.gradle.api.Project
 import java.io.File
-import java.util.LinkedList
+import java.util.*
 import kotlin.streams.asSequence
 
 data class CmdResult(val exitCode: Int, val output: String?)

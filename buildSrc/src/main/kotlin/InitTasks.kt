@@ -1,12 +1,5 @@
 import org.gradle.api.Project
-import task.createApplyPatchesTask
-import task.createImportMCDevTask
-import task.createInitGitSubmodulesTask
-import task.createPaperclipTask
-import task.createRebuildPatchesTask
-import task.createSetupUpstreamTask
-import task.createUpdateUpstreamTask
-import task.createUpstreamCommitTask
+import task.*
 
 @Suppress("UNUSED_VARIABLE")
 internal fun Project.initToothpickTasks() {

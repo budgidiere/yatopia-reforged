@@ -1,6 +1,5 @@
 import com.github.jengelman.gradle.plugins.shadow.ShadowPlugin
 import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
-import com.github.jengelman.gradle.plugins.shadow.transformers.AppendingTransformer
 import com.github.jengelman.gradle.plugins.shadow.transformers.Log4j2PluginsCacheFileTransformer
 import kotlinx.dom.elements
 import kotlinx.dom.parseXml
@@ -15,15 +14,10 @@ import org.gradle.api.tasks.bundling.Jar
 import org.gradle.api.tasks.compile.JavaCompile
 import org.gradle.api.tasks.javadoc.Javadoc
 import org.gradle.api.tasks.testing.Test
-import org.gradle.kotlin.dsl.apply
-import org.gradle.kotlin.dsl.attributes
-import org.gradle.kotlin.dsl.create
-import org.gradle.kotlin.dsl.get
-import org.gradle.kotlin.dsl.getValue
-import org.gradle.kotlin.dsl.getting
+import org.gradle.kotlin.dsl.*
 import java.nio.charset.StandardCharsets.UTF_8
 import java.text.SimpleDateFormat
-import java.util.Date
+import java.util.*
 
 internal fun Project.configureSubprojects() {
     subprojects {

@@ -11,7 +11,6 @@ import org.gradle.api.Task
 import toothpick
 import upstreams
 import java.io.File
-import rootProjectDir
 
 internal fun Project.createImportMCDevTask(
     receiver: Task.() -> Unit = {}

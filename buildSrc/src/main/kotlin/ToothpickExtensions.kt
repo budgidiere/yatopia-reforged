@@ -1,11 +1,7 @@
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.findByType
 import java.io.File
-import java.io.FileInputStream
-import java.lang.Boolean
 import java.nio.file.Path
-import java.util.*
-import kotlin.collections.ArrayList
 
 val Project.toothpick: ToothpickExtension
     get() = rootProject.extensions.findByType(ToothpickExtension::class)!!
