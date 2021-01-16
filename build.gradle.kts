@@ -36,12 +36,14 @@ subprojects {
         maven("https://repo.aikar.co/content/groups/aikar/")
         maven("https://nexus.velocitypowered.com/repository/velocity-artifacts-snapshots/")
         maven("https://libraries.minecraft.net")
+        maven("https://repo.codemc.io/repository/maven-public/")
+        maven("https://repo.mrivanplays.com/repository/ivan/")
         mavenLocal()
     }
 
     java {
         if(JavaVersion.VERSION_1_8 > JavaVersion.current()){
-            error("This build must be run with java 8 or better")
+            error("This build must be run with Java 8 or better")
         }
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.current()
