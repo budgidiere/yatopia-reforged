@@ -13,6 +13,9 @@ import upstreams
 import Upstream
 import java.nio.file.Files
 import java.nio.file.Path
+import java.nio.charset.StandardCharsets
+import java.util.stream.Collector
+import java.util.stream.Collectors
 
 
 internal fun Project.createUpdateUpstreamTask(
@@ -90,6 +93,23 @@ private fun updatePatch(
     i: Int,
     folder: String
 ) {
+
+    if (upstream.getCurrentCommitHash() != upstream.uptreamCommit || shouldDoCopy(fileUtils, upstream, serverRepoPatches, patch, i, folder)) {
+        fileUtils.copyFile("${upstream.repoPath}/patches/$folder/" +
+                "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch",
+            "${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"
+        )
+    }
+}
+
+fun shouldDoCopy(
+    fileUtils: FileUtils,
+    upstream: Upstream,
+    serverRepoPatches: MutableList<String>,
+    patch: String,
+    i: Int,
+    folder: String
+): Boolean {
     val folderFile = Path.of("${upstream.patchPath}/$folder").toFile()
     val folderList = folderFile.listFiles()
     val nullFolder = folderList == null
@@ -97,16 +117,38 @@ private fun updatePatch(
         needToPop = true
         folderFile.mkdirs()
     }
-    if (upstream.getCurrentCommitHash() != upstream.uptreamCommit || needToPop || nullFolder || folderList.isEmpty()) {
-        System.out.println("test")
-        System.out.println("${upstream.repoPath}/patches/$folder/" +
-                "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch")
-        System.out.println("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch")
-        fileUtils.copyFile("${upstream.repoPath}/patches/$folder/" +
-                "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch",
-            "${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"
-        )
-    }
+    return needToPop || patchHasDiff(fileUtils, upstream, serverRepoPatches, patch, i, folder)
+}
+
+fun patchHasDiff(
+    fileUtils: FileUtils,
+    upstream: Upstream,
+    serverRepoPatches: MutableList<String>,
+    patch: String,
+    i: Int,
+    folder: String
+): Boolean {
+    if (!patchChanged(fileUtils, upstream, serverRepoPatches, patch, i, folder)) return false
+    return false
+}
+
+fun patchChanged(
+    fileUtils: FileUtils,
+    upstream: Upstream,
+    serverRepoPatches: MutableList<String>,
+    patch: String,
+    i: Int,
+    folder: String
+): Boolean {
+    val upstreamFile = Files.readAllLines(Path.of("${upstream.repoPath}/patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
+    val repoFile = Files.readAllLines(Path.of("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"), StandardCharsets.UTF_8)
+    val linelistDiff = upstreamFile.stream().filter {line -> line.startsWith("+")}
+        .filter {line -> line.substring(1, line.length).trim().isBlank()}
+        .filter {line -> if (repoFile.contains(line)) {
+            repoFile.remove(line)
+            return@filter true
+        } else {return@filter false } }.collect(Collectors.toList())
+    return linelistDiff.isEmpty()
 }
 
 var needToPop = false;
