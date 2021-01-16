@@ -162,7 +162,7 @@ fun patchChanged(
     val diffCheckResult = diffCheckCmdResult.output.toString()
     if (diffCheckResult.isBlank()) return false
     val diffCheckChangeFiles = diffCheckResult.split("\\n".toRegex()).toTypedArray().toList()
-    return diffCheckChangeFiles.contains("${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch")
+    return diffCheckChangeFiles.contains("patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch")
 }
 
 var needToPop = false;
