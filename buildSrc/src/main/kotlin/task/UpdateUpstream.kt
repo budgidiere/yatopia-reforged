@@ -76,7 +76,6 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList.toList().stream().sorted().map {patch -> patch.name.substring(5, patch.name.length)}.collect(Collectors.toList())
                     for (patch in apiRepoPatches) {
-                        i++
                         if (apiPatches != null && apiPatches.contains(patch)) {
                             continue
                         } else {
