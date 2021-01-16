@@ -25,6 +25,15 @@ internal fun Project.createUpdateUpstreamTask(
     receiver(this)
     group = taskGroup
     doLast {
+        ensureSuccess(gitCmd("fetch", dir = upstreamDir, printOut = true))
+        ensureSuccess(gitCmd("reset", "--hard", toothpick.upstreamBranch, dir = upstreamDir, printOut = true))
+        ensureSuccess(gitCmd("add", toothpick.upstream, dir = rootProjectDir, printOut = true))
+        for (upstream in upstreams) {
+            ensureSuccess(gitCmd("fetch", dir = upstream.repoPath.toFile(), printOut = true))
+            ensureSuccess(gitCmd("reset", "--hard", toothpick.upstreamBranch, dir = upstream.repoPath.toFile(), printOut = true))
+            ensureSuccess(gitCmd("add", toothpick.upstream, dir = upstream.repoPath.toFile(), printOut = true))
+        }
+        ensureSuccess(gitCmd("submodule", "update", "--init", "--recursive", dir = upstreamDir, printOut = true))
         for (upstream in upstreams) {
             val serverRepoPatches = upstream.getRepoServerPatches()
             val apiRepoPatches = upstream.getRepoAPIPatches()
@@ -42,6 +51,7 @@ internal fun Project.createUpdateUpstreamTask(
                             updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server")
                         }
                     }
+                    needToPop = false;
                 }
                 if (apiRepoPatches != null) {
                     var i = 0
@@ -53,6 +63,7 @@ internal fun Project.createUpdateUpstreamTask(
                             updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api")
                         }
                     }
+                    needToPop = false;
                 }
             } else {
                 if (serverPatches != null) {
@@ -65,6 +76,7 @@ internal fun Project.createUpdateUpstreamTask(
                             updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server")
                         }
                     }
+                    needToPop = false;
                 }
                 if (apiPatches != null) {
                     var i = 0
@@ -76,13 +88,11 @@ internal fun Project.createUpdateUpstreamTask(
                             updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api")
                         }
                     }
+                    needToPop = false;
                 }
             }
+            upstream.updateUpstreamCommitHash()
         }
-        ensureSuccess(gitCmd("fetch", dir = upstreamDir, printOut = true))
-        ensureSuccess(gitCmd("reset", "--hard", toothpick.upstreamBranch, dir = upstreamDir, printOut = true))
-        ensureSuccess(gitCmd("add", toothpick.upstream, dir = rootProjectDir, printOut = true))
-        ensureSuccess(gitCmd("submodule", "update", "--init", "--recursive", dir = upstreamDir, printOut = true))
     }
 }
 
@@ -94,7 +104,6 @@ private fun updatePatch(
     i: Int,
     folder: String
 ) {
-
     if (upstream.getCurrentCommitHash() != upstream.uptreamCommit || shouldDoCopy(fileUtils, upstream, serverRepoPatches, patch, i, folder)) {
         fileUtils.copyFile("${upstream.repoPath}/patches/$folder/" +
                 "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch",
@@ -153,7 +162,7 @@ fun patchChanged(
     val diffCheckResult = diffCheckCmdResult.output.toString()
     if (diffCheckResult.isBlank()) return false
     val diffCheckChangeFiles = diffCheckResult.split("\\n".toRegex()).toTypedArray().toList()
-    return diffCheckChangeFiles.isEmpty()
+    return diffCheckChangeFiles.contains("${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch")
 }
 
 var needToPop = false;
