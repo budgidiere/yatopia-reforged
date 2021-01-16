@@ -40,6 +40,8 @@ internal fun Project.createApplyPatchesTask(
         for ((name, subproject) in toothpick.subprojects) {
             val (sourceRepo, projectDir, patchesDir) = subproject
 
+            val folder = (if (patchesDir.endsWith("server")) "server" else "api")
+
             // Reset or initialize subproject
             logger.lifecycle(">>> Resetting subproject $name")
             if (projectDir.exists()) {
@@ -53,11 +55,13 @@ internal fun Project.createApplyPatchesTask(
             val wasGitSigningEnabled = temporarilyDisableGitSigning(projectDir)
 
             for (upstream in upstreams) {
+                project.gitCmd("checkout", "-b", "${upstream.name}-$folder")
                 // Apply patches
-                val patchDir = Path.of("${upstream.patchPath}/${(if (patchesDir.endsWith("server")) "server" else "api")}")
+                val patchDir = Path.of("${upstream.patchPath}/$folder")
 
                 if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled)) continue
             }
+            project.gitCmd("checkout", "-b", "$forkName-$folder")
             val patchDir = patchesDir.toPath()
             // Apply patches
             if (applyPatches(patchDir, forkName, name, wasGitSigningEnabled)) continue

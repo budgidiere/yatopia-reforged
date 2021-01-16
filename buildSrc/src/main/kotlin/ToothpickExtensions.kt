@@ -31,8 +31,8 @@ val Project.upstreamDir: File
 val Project.projectPath: Path
     get() = projectDir.toPath()
 
-val Project.upstreams: ArrayList<Upstream>
-    get() = toothpick.getUpstreams(rootProject.projectDir)
+val Project.upstreams: MutableList<Upstream>
+    get() = toothpick.getUpstreams(rootProject.projectDir) as MutableList<Upstream>
 
 val Project.forkName: String
     get() = toothpick.forkName
