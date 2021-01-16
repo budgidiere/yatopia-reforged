@@ -32,7 +32,7 @@ internal fun Project.createUpdateUpstreamTask(
                             continue
                         } else {
                             fileUtils.copyFile("${upstream.repoPath}/patches/server/${String.format("%04d", 
-                                    serverRepoPatches.indexOf(patch) +1 )}-$patch",
+                                    serverRepoPatches.indexOf(patch) + 1 )}-$patch",
                                 "${upstream.patchPath}/server/${String.format("%04d", i)}-$patch")
                         }
                     }
@@ -45,7 +45,7 @@ internal fun Project.createUpdateUpstreamTask(
                             continue
                         } else {
                             fileUtils.copyFile("${upstream.repoPath}/patches/api/${String.format("%04d",
-                                apiRepoPatches.indexOf(patch) +1 )}-$patch",
+                                apiRepoPatches.indexOf(patch) + 1 )}-$patch",
                                 "${upstream.patchPath}/api/${String.format("%04d", i)}-$patch")
                         }
                     }
@@ -72,7 +72,7 @@ internal fun Project.createUpdateUpstreamTask(
                             continue
                         } else if (apiRepoPatches != null) {
                             fileUtils.copyFile("${upstream.repoPath}/patches/api/${String.format("%04d",
-                                apiRepoPatches.indexOf(patch) +1 )}-$patch",
+                                apiRepoPatches.indexOf(patch) + 1 )}-$patch",
                                 "${upstream.patchPath}/api/${String.format("%04d", i)}-$patch")
                         }
                     }
