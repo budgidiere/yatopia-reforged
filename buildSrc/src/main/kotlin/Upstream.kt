@@ -58,4 +58,21 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
     }
 
     private fun Project.getCommitHash(): String = gitHash(repo = repoPath.toFile())
+
+    public fun getRepoServerPatches() {
+        getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server"))
+    }
+
+    public fun getRepoAPIPatches() {
+        getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api"))
+    }
+
+    private fun getRepoPatches(path: File): ArrayList<String> {
+        val files = path.listFiles()
+        val filesList = ArrayList<String>()
+        for (patch in files) {
+            filesList.add(patch.name)
+        }
+        return filesList
+    }
 }
