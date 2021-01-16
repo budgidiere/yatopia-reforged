@@ -3,12 +3,21 @@ import java.io.File
 import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.*
+import java.util.stream.Collectors
+import kotlin.collections.ArrayList
 
 open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayList<String>?, in_rootProjectDir: File, in_project: Project) {
     var name: String = in_name
     var useBlackList: Boolean = in_useBlackList
-    var list: ArrayList<String>? = in_list
+    private var list: ArrayList<String>? = in_list
     private var rootProjectDir: File = in_rootProjectDir
+
+    var serverList = in_list?.stream()?.filter { patch -> patch.startsWith("server/") }
+        ?.map { patch -> patch.substring(7, patch.length) }?.collect(Collectors.toList())
+    var apiList = in_list?.stream()?.filter { patch -> patch.startsWith("API/") }
+        ?.map { patch -> patch.substring(4, patch.length) }?.collect(Collectors.toList())
+
 
     var patchPath = Path.of("$rootProjectDir/patches/$name/patches")
     var repoPath = Path.of("$rootProjectDir/upstream/$name")
