@@ -7,12 +7,13 @@ import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
-open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: String, in_rootProjectDir: File, in_branch: String, in_project: Project) {
+open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: String, in_rootProjectDir: File, in_branch: String, in_id: Int, in_project: Project) {
     var name: String = in_name
     var useBlackList: Boolean = in_useBlackList
     private var list: ArrayList<String> = ArrayList(in_list.split(",".toRegex()))
     private var rootProjectDir: File = in_rootProjectDir
     var branch = in_branch
+    var id = in_id
 
     var serverList = list.stream().filter { patch -> patch.startsWith("server/") }
         ?.sorted()?.map { patch -> patch.substring(7, patch.length) }?.collect(Collectors.toList())

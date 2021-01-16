@@ -4,6 +4,7 @@ import java.io.File
 import java.io.FileInputStream
 import java.lang.Boolean
 import java.util.*
+import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
 @Suppress("UNUSED_PARAMETER")
@@ -60,7 +61,7 @@ open class ToothpickExtension(objects: ObjectFactory) {
     val paperWorkDir: File
         get() = paperDir.resolve("work/Minecraft/${minecraftVersion}")
 
-    fun getUpstreams(rootProjectDir: File): ArrayList<Upstream> {
+    fun getUpstreams(rootProjectDir: File): MutableList<Upstream>? {
         val configDir = rootProjectDir.resolve("$rootProjectDir/upstreamConfig")
         val upstreams = configDir.listFiles()
         val uptreamArray = ArrayList<Upstream>()
@@ -72,8 +73,9 @@ open class ToothpickExtension(objects: ObjectFactory) {
                 (prop.getProperty("list")),
                 rootProjectDir,
                 prop.getProperty("branch"),
+                Integer.parseInt(upstream.name.substring(0,4)),
                 project))
         }
-        return uptreamArray;
+        return uptreamArray.stream().sorted {upstream1, upstream2 -> upstream1.id - upstream2.id}.collect(Collectors.toList())
     }
 }
