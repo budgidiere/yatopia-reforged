@@ -44,7 +44,15 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
     }
 
     public fun updateUpstreamCommitHash() {
+        val commitFileFoler = Path.of("$rootProjectDir/upstreamCommits")
+        val commitFilePath = Path.of("$commitFileFoler/$name")
+        val commitFile = commitFilePath.toFile()
+        updateHashFile(commitFile)
         uptreamCommit = getUpstreamCommitHash()
+    }
+
+    public fun getCurrentCommitHash(): String {
+        return project.getCommitHash()
     }
 
     private fun updateHashFile(commitFile: File): String {

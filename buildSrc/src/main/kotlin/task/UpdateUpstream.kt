@@ -10,6 +10,10 @@ import taskGroup
 import toothpick
 import upstreamDir
 import upstreams
+import Upstream
+import java.nio.file.Files
+import java.nio.file.Path
+
 
 internal fun Project.createUpdateUpstreamTask(
     receiver: Task.() -> Unit = {}
@@ -31,9 +35,7 @@ internal fun Project.createUpdateUpstreamTask(
                         if (serverPatches != null && serverPatches.contains(patch)) {
                             continue
                         } else {
-                            fileUtils.copyFile("${upstream.repoPath}/patches/server/${String.format("%04d", 
-                                    serverRepoPatches.indexOf(patch) + 1 )}-$patch",
-                                "${upstream.patchPath}/server/${String.format("%04d", i)}-$patch")
+                            updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server")
                         }
                     }
                 }
@@ -44,9 +46,7 @@ internal fun Project.createUpdateUpstreamTask(
                         if (apiPatches != null && apiPatches.contains(patch)) {
                             continue
                         } else {
-                            fileUtils.copyFile("${upstream.repoPath}/patches/api/${String.format("%04d",
-                                apiRepoPatches.indexOf(patch) + 1 )}-$patch",
-                                "${upstream.patchPath}/api/${String.format("%04d", i)}-$patch")
+                            updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api")
                         }
                     }
                 }
@@ -58,9 +58,7 @@ internal fun Project.createUpdateUpstreamTask(
                         if (serverRepoPatches != null && !serverRepoPatches.contains(patch)) {
                             continue
                         } else if (serverRepoPatches != null) {
-                            fileUtils.copyFile("${upstream.repoPath}/patches/server/${String.format("%04d",
-                                serverRepoPatches.indexOf(patch) + 1 )}-$patch",
-                                "${upstream.patchPath}/server/${String.format("%04d", i)}-$patch")
+                            updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server")
                         }
                     }
                 }
@@ -71,9 +69,7 @@ internal fun Project.createUpdateUpstreamTask(
                         if (apiRepoPatches != null && !apiRepoPatches.contains(patch)) {
                             continue
                         } else if (apiRepoPatches != null) {
-                            fileUtils.copyFile("${upstream.repoPath}/patches/api/${String.format("%04d",
-                                apiRepoPatches.indexOf(patch) + 1 )}-$patch",
-                                "${upstream.patchPath}/api/${String.format("%04d", i)}-$patch")
+                            updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api")
                         }
                     }
                 }
@@ -85,3 +81,32 @@ internal fun Project.createUpdateUpstreamTask(
         ensureSuccess(gitCmd("submodule", "update", "--init", "--recursive", dir = upstreamDir, printOut = true))
     }
 }
+
+private fun updatePatch(
+    fileUtils: FileUtils,
+    upstream: Upstream,
+    serverRepoPatches: MutableList<String>,
+    patch: String,
+    i: Int,
+    folder: String
+) {
+    val folderFile = Path.of("${upstream.patchPath}/$folder").toFile()
+    val folderList = folderFile.listFiles()
+    val nullFolder = folderList == null
+    if (nullFolder || folderList.isEmpty()) {
+        needToPop = true
+        folderFile.mkdirs()
+    }
+    if (upstream.getCurrentCommitHash() != upstream.uptreamCommit || needToPop || nullFolder || folderList.isEmpty()) {
+        System.out.println("test")
+        System.out.println("${upstream.repoPath}/patches/$folder/" +
+                "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch")
+        System.out.println("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch")
+        fileUtils.copyFile("${upstream.repoPath}/patches/$folder/" +
+                "${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch",
+            "${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"
+        )
+    }
+}
+
+var needToPop = false;
