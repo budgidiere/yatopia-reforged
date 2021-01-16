@@ -3,18 +3,20 @@ import java.io.File
 import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Path
+import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
-open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayList<String>?, in_rootProjectDir: File, in_project: Project) {
+open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: String, in_rootProjectDir: File, in_branch: String, in_project: Project) {
     var name: String = in_name
     var useBlackList: Boolean = in_useBlackList
-    private var list: ArrayList<String>? = in_list
+    private var list: ArrayList<String> = ArrayList(in_list.split(",".toRegex()))
     private var rootProjectDir: File = in_rootProjectDir
+    var branch = in_branch
 
-    var serverList = in_list?.stream()?.filter { patch -> patch.startsWith("server/") }
+    var serverList = list.stream().filter { patch -> patch.startsWith("server/") }
         ?.sorted()?.map { patch -> patch.substring(7, patch.length) }?.collect(Collectors.toList())
-    var apiList = in_list?.stream()?.filter { patch -> patch.startsWith("API/") }
+    var apiList = list.stream().filter { patch -> patch.startsWith("API/") }
         ?.sorted()?.map { patch -> patch.substring(4, patch.length) }?.collect(Collectors.toList())
 
 

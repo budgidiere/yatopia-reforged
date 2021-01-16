@@ -69,9 +69,10 @@ open class ToothpickExtension(objects: ObjectFactory) {
             prop.load(FileInputStream(upstream))
             uptreamArray.add(Upstream(prop.getProperty("name"),
                 Boolean.parseBoolean(prop.getProperty("useBlackList")),
-                ((if (prop.getProperty("list").equals("null")) null
-                else try { prop.getProperty("list").split(",".toRegex()).toTypedArray().toList() } catch (e: Exception) {null}) as ArrayList<String>?),
-                rootProjectDir, project))
+                (prop.getProperty("list")),
+                rootProjectDir,
+                prop.getProperty("branch"),
+                project))
         }
         return uptreamArray;
     }
