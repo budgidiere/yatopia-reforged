@@ -52,10 +52,10 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList.toList().stream().sorted().map {patch -> patch.name.substring(5, patch.name.length)}.collect(Collectors.toList())
                     for (patch in serverRepoPatches) {
-                        i++
                         if (serverPatches != null && serverPatches.contains(patch)) {
                             continue
                         } else {
+                            i++
                             updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server", currentPatchListFiltered)
                         }
                     }
@@ -80,6 +80,7 @@ internal fun Project.createUpdateUpstreamTask(
                         if (apiPatches != null && apiPatches.contains(patch)) {
                             continue
                         } else {
+                            i++
                             updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api", currentPatchListFiltered)
                         }
                     }
@@ -100,10 +101,10 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList.toList().stream().sorted().map {patch -> patch.name.substring(5, patch.name.length)}.collect(Collectors.toList())
                     for (patch in serverPatches) {
-                        i++
                         if (serverRepoPatches != null && !serverRepoPatches.contains(patch)) {
                             continue
                         } else if (serverRepoPatches != null) {
+                            i++
                             updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server", currentPatchListFiltered)
                         }
                     }
@@ -123,10 +124,10 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList.toList().stream().sorted().map {patch -> patch.name.substring(5, patch.name.length)}.collect(Collectors.toList())
                     for (patch in apiPatches) {
-                        i++
                         if (apiRepoPatches != null && !apiRepoPatches.contains(patch)) {
                             continue
                         } else if (apiRepoPatches != null) {
+                            i++
                             updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api", currentPatchListFiltered)
                         }
                     }
