@@ -3,7 +3,6 @@ import java.io.File
 import java.io.FileWriter
 import java.nio.file.Files
 import java.nio.file.Path
-import java.util.*
 import java.util.stream.Collectors
 import kotlin.collections.ArrayList
 
@@ -31,6 +30,8 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
         val commitFilePath = Path.of("$commitFileFoler/$name")
         val commitFile = commitFilePath.toFile()
         var commitHash: String
+        System.out.println(getRepoAPIPatches().toString())
+        System.out.println(getRepoServerPatches().st )
         if (commitFile.isFile) {
             commitHash = Files.readAllLines(commitFilePath).toString()
             commitHash = commitHash.substring(1, commitHash.length - 1)
@@ -59,12 +60,12 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
 
     private fun Project.getCommitHash(): String = gitHash(repo = repoPath.toFile())
 
-    public fun getRepoServerPatches() {
-        getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server"))
+    public fun getRepoServerPatches(): ArrayList<String>  {
+        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server"))
     }
 
-    public fun getRepoAPIPatches() {
-        getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api"))
+    public fun getRepoAPIPatches(): ArrayList<String>  {
+        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api"))
     }
 
     private fun getRepoPatches(path: File): ArrayList<String> {
