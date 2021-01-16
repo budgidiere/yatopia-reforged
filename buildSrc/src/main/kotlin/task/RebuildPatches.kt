@@ -6,6 +6,9 @@ import org.gradle.api.Project
 import org.gradle.api.Task
 import taskGroup
 import toothpick
+import upstreams
+import java.nio.file.Path
+import forkName
 
 @Suppress("UNUSED_VARIABLE")
 internal fun Project.createRebuildPatchesTask(
@@ -16,7 +19,34 @@ internal fun Project.createRebuildPatchesTask(
     doLast {
         for ((name, subproject) in toothpick.subprojects) {
             val (sourceRepo, projectDir, patchesDir) = subproject
+            val previousUpstreamName = "origin/master"
+            val folder = (if (patchesDir.endsWith("server")) "server" else "api")
 
+            for (upstream in upstreams) {
+                val patchPath = Path.of("${upstream.patchPath}/$folder").toFile()
+
+                if (!Path.of("${upstream.patchPath}/$folder").toFile().exists()) {
+                    patchPath.mkdirs()
+                }
+
+                logger.lifecycle(">>> Rebuilding patches for ${upstream.name}")
+
+                // Nuke old patches
+                patchPath.listFiles()
+                    ?.filter { it.name.endsWith(".patch") }
+                    ?.forEach { it.delete() }
+                ensureSuccess(gitCmd("checkout", "${upstream.name}-$folder"))
+                ensureSuccess(
+                    gitCmd(
+                        "format-patch",
+                        "--no-stat", "--zero-commit", "--full-index", "--no-signature", "-N",
+                        "-o", patchPath.absolutePath, previousUpstreamName,
+                        dir = projectDir,
+                        printOut = true
+                    )
+                )
+            }
+            ensureSuccess(gitCmd("checkout", "$forkName-$folder"))
             if (!patchesDir.exists()) {
                 patchesDir.mkdirs()
             }
