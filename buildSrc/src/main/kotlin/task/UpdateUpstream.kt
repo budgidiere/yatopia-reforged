@@ -11,6 +11,7 @@ import toothpick
 import upstreamDir
 import upstreams
 import Upstream
+import org.gradle.internal.impldep.com.amazonaws.auth.profile.internal.ProfileKeyConstants
 import java.nio.file.Files
 import java.nio.file.Path
 import java.nio.charset.StandardCharsets
@@ -129,7 +130,15 @@ fun patchHasDiff(
     folder: String
 ): Boolean {
     if (!patchChanged(fileUtils, upstream, serverRepoPatches, patch, i, folder)) return false
-    return false
+    val upstreamFile = Files.readAllLines(Path.of("${upstream.repoPath}/patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
+    val repoFile = Files.readAllLines(Path.of("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"), StandardCharsets.UTF_8)
+    val linelistDiff = upstreamFile.stream().filter {line -> line.startsWith("+")}
+        .filter {line -> line.substring(1, line.length).trim().isBlank()}
+        .filter {line -> if (repoFile.contains(line)) {
+            repoFile.remove(line)
+            return@filter true
+        } else {return@filter false } }.collect(Collectors.toList())
+    return linelistDiff.isEmpty()
 }
 
 fun patchChanged(
@@ -140,15 +149,11 @@ fun patchChanged(
     i: Int,
     folder: String
 ): Boolean {
-    val upstreamFile = Files.readAllLines(Path.of("${upstream.repoPath}/patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
-    val repoFile = Files.readAllLines(Path.of("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"), StandardCharsets.UTF_8)
-    val linelistDiff = upstreamFile.stream().filter {line -> line.startsWith("+")}
-        .filter {line -> line.substring(1, line.length).trim().isBlank()}
-        .filter {line -> if (repoFile.contains(line)) {
-            repoFile.remove(line)
-            return@filter true
-        } else {return@filter false } }.collect(Collectors.toList())
-    return linelistDiff.isEmpty()
+    val diffCheckCmdResult = upstream.project.gitCmd("diff", "--name-only", upstream.uptreamCommit, upstream.getCurrentCommitHash(), dir = upstream.repoPath.toFile() )
+    val diffCheckResult = diffCheckCmdResult.output.toString()
+    if (diffCheckResult.isBlank()) return false
+    val diffCheckChangeFiles = diffCheckResult.split("\\n".toRegex()).toTypedArray().toList()
+    return diffCheckChangeFiles.isEmpty()
 }
 
 var needToPop = false;
