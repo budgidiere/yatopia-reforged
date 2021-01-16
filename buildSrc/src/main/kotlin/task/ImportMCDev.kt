@@ -42,7 +42,7 @@ internal fun Project.createImportMCDevTask(
     }
 
     fun getAndApplyNMS(patchesDir: File) {
-        (patchesDir.listFiles() ?: error("No patches in server?")).asSequence()
+        (patchesDir.listFiles() ?: return).asSequence()
             .flatMap { it.readLines().asSequence() }
             .filter { it.startsWith("+++ b/src/main/java/net/minecraft/server/") }
             .distinct()

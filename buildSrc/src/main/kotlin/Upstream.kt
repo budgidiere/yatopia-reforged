@@ -13,9 +13,9 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
     private var rootProjectDir: File = in_rootProjectDir
 
     var serverList = in_list?.stream()?.filter { patch -> patch.startsWith("server/") }
-        ?.map { patch -> patch.substring(7, patch.length) }?.collect(Collectors.toList())
+        ?.sorted()?.map { patch -> patch.substring(7, patch.length) }?.collect(Collectors.toList())
     var apiList = in_list?.stream()?.filter { patch -> patch.startsWith("API/") }
-        ?.map { patch -> patch.substring(4, patch.length) }?.collect(Collectors.toList())
+        ?.sorted()?.map { patch -> patch.substring(4, patch.length) }?.collect(Collectors.toList())
 
 
     var patchPath = Path.of("$rootProjectDir/patches/$name/patches")
@@ -60,12 +60,12 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
 
     public fun getRepoServerPatches(): MutableList<String>? {
         return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server")).stream()
-            .map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
+            .sorted().map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
     }
 
     public fun getRepoAPIPatches(): MutableList<String>? {
         return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api")).stream()
-            .map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
+            .sorted().map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
     }
 
     private fun getRepoPatches(path: File): ArrayList<String> {
