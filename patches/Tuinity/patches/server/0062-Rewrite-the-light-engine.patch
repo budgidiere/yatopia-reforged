@@ -37,10 +37,10 @@ by 2x. According to cpu time, the light engine itself spent 10x less time
 lighting chunks for generation.
 
 diff --git a/src/main/java/com/destroystokyo/paper/PaperCommand.java b/src/main/java/com/destroystokyo/paper/PaperCommand.java
-index 196648e65c6f58c18e19623474d69d780d542689..57863d913c67750cdd794a65513f3daf93580c52 100644
+index 0abfe19e204d20af0f8dedbeedb0ef98dfe9d3c8..1a876336384198bad2a25c018be5f2418027dd47 100644
 --- a/src/main/java/com/destroystokyo/paper/PaperCommand.java
 +++ b/src/main/java/com/destroystokyo/paper/PaperCommand.java
-@@ -182,6 +182,44 @@ public class PaperCommand extends Command {
+@@ -186,6 +186,44 @@ public class PaperCommand extends Command {
          }
      }
  
@@ -85,7 +85,7 @@ index 196648e65c6f58c18e19623474d69d780d542689..57863d913c67750cdd794a65513f3daf
      private void doFixLight(CommandSender sender, String[] args) {
          if (!(sender instanceof Player)) {
              sender.sendMessage("Only players can use this command");
-@@ -190,7 +228,7 @@ public class PaperCommand extends Command {
+@@ -194,7 +232,7 @@ public class PaperCommand extends Command {
          int radius = 2;
          if (args.length > 1) {
              try {
@@ -94,7 +94,7 @@ index 196648e65c6f58c18e19623474d69d780d542689..57863d913c67750cdd794a65513f3daf
              } catch (Exception e) {
                  sender.sendMessage("Not a number");
                  return;
-@@ -203,6 +241,13 @@ public class PaperCommand extends Command {
+@@ -207,6 +245,13 @@ public class PaperCommand extends Command {
          net.minecraft.server.WorldServer world = (WorldServer) handle.world;
          LightEngineThreaded lightengine = world.getChunkProvider().getLightEngine();
  
@@ -3947,7 +3947,7 @@ index 2760b377d1f68ac5f66e7274317379e2dda8288a..829d4a7508e1656dbdc912096b7eafcf
              protected final boolean c;
              private final boolean[] j;
 diff --git a/src/main/java/net/minecraft/server/Chunk.java b/src/main/java/net/minecraft/server/Chunk.java
-index 6fa33cd4a3e1181ad8fe2b3c9872951c5780e536..0a8173a5bcd7212ebeff204fef5efdf1633aac78 100644
+index 781d74cf7e3669d71727cce781a8f8ce088c5547..7842e65115cf6c37322c83ebff954a06408680b5 100644
 --- a/src/main/java/net/minecraft/server/Chunk.java
 +++ b/src/main/java/net/minecraft/server/Chunk.java
 @@ -140,6 +140,41 @@ public class Chunk implements IChunkAccess {
@@ -3992,7 +3992,7 @@ index 6fa33cd4a3e1181ad8fe2b3c9872951c5780e536..0a8173a5bcd7212ebeff204fef5efdf1
  
      // Tuinity start - entity slices by class
      private final com.tuinity.tuinity.chunk.ChunkEntitiesByClass entitiesByClass = new com.tuinity.tuinity.chunk.ChunkEntitiesByClass(this);
-@@ -442,6 +477,11 @@ public class Chunk implements IChunkAccess {
+@@ -443,6 +478,11 @@ public class Chunk implements IChunkAccess {
  
      public Chunk(World world, ProtoChunk protochunk) {
          this(world, protochunk.getPos(), protochunk.getBiomeIndex(), protochunk.p(), protochunk.n(), protochunk.o(), protochunk.getInhabitedTime(), protochunk.getSections(), (Consumer) null);
@@ -4005,7 +4005,7 @@ index 6fa33cd4a3e1181ad8fe2b3c9872951c5780e536..0a8173a5bcd7212ebeff204fef5efdf1
  
          while (iterator.hasNext()) {
 diff --git a/src/main/java/net/minecraft/server/ChunkRegionLoader.java b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
-index 5eb14c4cd8259310cdc62d05c5d223092deb8bbe..cba943682f5ee798517bc8c3a098c100e235320b 100644
+index d0bc446815006cf1b527d1e51e051677b05ec19f..fab27084b2929eb1d2a60d9398218ac3c8519fb5 100644
 --- a/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 +++ b/src/main/java/net/minecraft/server/ChunkRegionLoader.java
 @@ -64,6 +64,13 @@ public class ChunkRegionLoader {
@@ -4164,7 +4164,7 @@ index cebd808e273dbdb88feb16920dd7a2f60390b34f..33b8f4e0f09fdc41c8ea48b6ed77af19
      final com.destroystokyo.paper.util.maplist.IBlockDataList tickingList = new com.destroystokyo.paper.util.maplist.IBlockDataList(); // Paper
  
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 7240b885d96eb2df187b6229449af1a893a4524e..40f56858143651bb0addd0b74db7388ecbe56521 100644
+index 04d505c7a19775d0353c10424a84a1ce8885dc2c..9f5b7243ccbe0729a061345c25033d9145b91b3f 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -527,6 +527,185 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -4354,7 +4354,7 @@ index 7240b885d96eb2df187b6229449af1a893a4524e..40f56858143651bb0addd0b74db7388e
                  this.playerConnection.sendPacket(new PacketPlayOutUpdateHealth(this.getBukkitEntity().getScaledHealth(), this.foodData.getFoodLevel(), this.foodData.getSaturationLevel())); // CraftBukkit
                  this.lastHealthSent = this.getHealth();
 diff --git a/src/main/java/net/minecraft/server/EnumDirection.java b/src/main/java/net/minecraft/server/EnumDirection.java
-index 36aafc3b71013bcec0f4d956761fc2710848b3fd..c9963c19892c3e408964b72983bc6e26f8b63b67 100644
+index 1aa070db60f5473576fb5d056cadde5106766489..24e6f3141ff4434f770e956a8d240bf856442933 100644
 --- a/src/main/java/net/minecraft/server/EnumDirection.java
 +++ b/src/main/java/net/minecraft/server/EnumDirection.java
 @@ -160,8 +160,8 @@ public enum EnumDirection implements INamable {
@@ -5143,7 +5143,7 @@ index 700660dd93b3090334bb3033d5f5fdd6ab684744..e3b72922e2dfad07f3452ec5ee2af379
          VoxelShape[] avoxelshape = new VoxelShape[]{VoxelShapes.a()};
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index a65a73d2f3f42862950b73b42e673ebdb6781a4e..df7c6aacdd7e812fc8bd4834bce81273fe4915ef 100644
+index 64704800c690e81f32537ec171f630dc078b3371..74bd9b253487aa7e1999e9a708cdbb194af1dcff 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -304,6 +304,13 @@ public class WorldServer extends World implements GeneratorAccessSeed {

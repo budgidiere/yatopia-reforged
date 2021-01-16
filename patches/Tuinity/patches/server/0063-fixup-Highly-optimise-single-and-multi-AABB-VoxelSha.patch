@@ -218,7 +218,7 @@ index e95fc7d98b70c84f3bf94440da977deb2d541e46..ab1085091fefea3a3fa15f7028bec050
      // Tuinity end - optimise pathfinder collision detection
  
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 4eda7e81ce4f600082e118e2401b37a362b31597..d43a843be591da1b34b37dc95d7d82549d9f56f4 100644
+index 097715bc66a2db4fdebcf8ed53aed459dfb43fa6..a125489d6a3b202d7e2b3d7df26fd72b81f2bd98 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -785,7 +785,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -473,7 +473,7 @@ index db735e29d427cc8f4bd4ba54c7a44daf9fed9e61..636bbbc42466cb54c300352f400464fe
      }
  
 diff --git a/src/main/java/net/minecraft/server/WorldServer.java b/src/main/java/net/minecraft/server/WorldServer.java
-index df7c6aacdd7e812fc8bd4834bce81273fe4915ef..f5a7fb48da469bb53d38dceddfe56fe349e7e5e8 100644
+index 74bd9b253487aa7e1999e9a708cdbb194af1dcff..5c3080fd3e14988db9901c4e8015cf6da7af28a3 100644
 --- a/src/main/java/net/minecraft/server/WorldServer.java
 +++ b/src/main/java/net/minecraft/server/WorldServer.java
 @@ -372,248 +372,15 @@ public class WorldServer extends World implements GeneratorAccessSeed {
