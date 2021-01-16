@@ -141,7 +141,7 @@ fun patchHasDiff(
     if (!patchChanged(fileUtils, upstream, serverRepoPatches, patch, i, folder)) return false
     val upstreamFile = Files.readAllLines(Path.of("${upstream.repoPath}/patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
     val repoFile = Files.readAllLines(Path.of("${upstream.patchPath}/$folder/${String.format("%04d", i)}-$patch"), StandardCharsets.UTF_8)
-    val linelistDiff = upstreamFile.stream().filter {line -> line.startsWith("+")}
+    val linelistDiff = upstreamFile.stream().filter {line -> line.startsWith("+") || line.startsWith("-")}
         .filter {line -> line.substring(1, line.length).trim().isBlank()}
         .filter {line -> if (repoFile.contains(line)) {
             repoFile.remove(line)
