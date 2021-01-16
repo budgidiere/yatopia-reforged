@@ -30,8 +30,6 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
         val commitFilePath = Path.of("$commitFileFoler/$name")
         val commitFile = commitFilePath.toFile()
         var commitHash: String
-        System.out.println(getRepoAPIPatches().toString())
-        System.out.println(getRepoServerPatches().st )
         if (commitFile.isFile) {
             commitHash = Files.readAllLines(commitFilePath).toString()
             commitHash = commitHash.substring(1, commitHash.length - 1)
