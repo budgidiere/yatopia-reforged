@@ -58,12 +58,14 @@ open class Upstream(in_name: String, in_useBlackList: Boolean, in_list: ArrayLis
 
     private fun Project.getCommitHash(): String = gitHash(repo = repoPath.toFile())
 
-    public fun getRepoServerPatches(): ArrayList<String>  {
-        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server"))
+    public fun getRepoServerPatches(): MutableList<String>? {
+        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/server")).stream()
+            .map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
     }
 
-    public fun getRepoAPIPatches(): ArrayList<String>  {
-        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api"))
+    public fun getRepoAPIPatches(): MutableList<String>? {
+        return getRepoPatches(rootProjectDir.resolve("$repoPath/patches/api")).stream()
+            .map {patch -> patch.substring(5, patch.length) }.collect(Collectors.toList())
     }
 
     private fun getRepoPatches(path: File): ArrayList<String> {
