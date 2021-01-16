@@ -10,6 +10,7 @@ import taskGroup
 import temporarilyDisableGitSigning
 import toothpick
 import upstreams
+import java.io.File
 import java.nio.file.Files
 import java.nio.file.Path
 
@@ -18,7 +19,7 @@ internal fun Project.createApplyPatchesTask(
 ): Task = tasks.create("applyPatches") {
     receiver(this)
     group = taskGroup
-    fun applyPatches(patchDir: Path, applyName: String, name: String, wasGitSigningEnabled: Boolean): Boolean {
+    fun applyPatches(patchDir: Path, applyName: String, name: String, wasGitSigningEnabled: Boolean, projectDir: File): Boolean {
         val patchPaths = Files.newDirectoryStream(patchDir)
             .map { it.toFile() }
             .filter { it.name.endsWith(".patch") }
@@ -59,12 +60,12 @@ internal fun Project.createApplyPatchesTask(
                 // Apply patches
                 val patchDir = Path.of("${upstream.patchPath}/$folder")
 
-                if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled)) continue
+                if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled, projectDir)) continue
             }
             project.gitCmd("checkout", "-b", "$forkName-$folder")
             val patchDir = patchesDir.toPath()
             // Apply patches
-            if (applyPatches(patchDir, forkName, name, wasGitSigningEnabled)) continue
+            if (applyPatches(patchDir, forkName, name, wasGitSigningEnabled, projectDir)) continue
 
             if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
             logger.lifecycle(">>> Done applying patches to $name")
