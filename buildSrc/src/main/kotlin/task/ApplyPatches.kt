@@ -30,11 +30,28 @@ internal fun Project.createApplyPatchesTask(
 
         logger.lifecycle(">>> Applying $applyName patches to $name")
 
-        val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
-            "--rerere-autoupdate", "--whitespace=fix",  *patches)
-        ensureSuccess(gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true)) {
-            if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
+        gitCmd("am", "--abort")
+
+        //Cursed Apply Mode that makes fixing stuff a lot easier
+        if (true) {
+            for (patch in patches) {
+                val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
+                    "--rerere-autoupdate", "--whitespace=fix", "--reject", "-C0", patch)
+                if (gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true).exitCode != 0) {
+                    System.out.println("test")
+                    gitCmd("add", ".", dir = projectDir, printOut = true)
+                    gitCmd("am", "--continue", dir = projectDir, printOut = true)
+                }
+            }
+
+        } else {
+            val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
+                "--rerere-autoupdate", "--whitespace=fix",  *patches)
+            ensureSuccess(gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true)) {
+                if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
+            }
         }
+
         return false;
     }
 

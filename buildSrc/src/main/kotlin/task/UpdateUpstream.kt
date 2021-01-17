@@ -103,7 +103,7 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                 }
             } else {
-                if (serverPatches != null) {
+                if (serverRepoPatches != null) {
                     var i = 0
                     var currentPatchList = Path.of("${upstream.patchPath}/server").toFile().listFiles() as Array<File>?
                     var tmpFolder = Path.of("${upstream.patchPath}/tmp/server").toFile()
@@ -121,19 +121,21 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList?.toList()
                         ?.stream()?.sorted()?.map { patch -> patch.name.substring(5, patch.name.length)}?.collect(Collectors.toList())
-                    for (patch in serverPatches) {
-                        if (serverRepoPatches != null && !serverRepoPatches.contains(patch)) {
-                            continue
-                        } else if (serverRepoPatches != null) {
-                            i++
-                            updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server", currentPatchListFiltered)
+                    for (patch in serverRepoPatches) {
+                        if (serverPatches != null) {
+                            if (!serverPatches.contains(patch)) {
+                                continue
+                            } else {
+                                i++
+                                updatePatch(fileUtils, upstream, serverRepoPatches, patch, i, "server", currentPatchListFiltered)
+                            }
                         }
                     }
                     for (patch in tmpFolder.listFiles()) {
                         patch.delete()
                     }
                 }
-                if (apiPatches != null) {
+                if (apiRepoPatches != null) {
                     var i = 0
                     var currentPatchList = Path.of("${upstream.patchPath}/api").toFile().listFiles() as Array<File>?
                     var tmpFolder = Path.of("${upstream.patchPath}/tmp/api").toFile()
@@ -151,12 +153,14 @@ internal fun Project.createUpdateUpstreamTask(
                     }
                     var currentPatchListFiltered = currentPatchList?.toList()
                         ?.stream()?.sorted()?.map { patch -> patch.name.substring(5, patch.name.length)}?.collect(Collectors.toList())
-                    for (patch in apiPatches) {
-                        if (apiRepoPatches != null && !apiRepoPatches.contains(patch)) {
-                            continue
-                        } else if (apiRepoPatches != null) {
-                            i++
-                            updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api", currentPatchListFiltered)
+                    for (patch in apiRepoPatches) {
+                        if (apiPatches != null) {
+                            if (!apiPatches.contains(patch)) {
+                                continue
+                            } else {
+                                i++
+                                updatePatch(fileUtils, upstream, apiRepoPatches, patch, i, "api", currentPatchListFiltered)
+                            }
                         }
                     }
                     for (patch in tmpFolder.listFiles()) {

@@ -1,0 +1,64 @@
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
+From: tr7zw <tr7zw@live.de>
+Date: Wed, 5 Aug 2020 14:25:50 -0500
+Subject: [PATCH] Add GameProfileLookupEvent
+
+
+diff --git a/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java b/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java
+index 2751ce7f1556da07ef853807a588f096adf6ef7f..8bda2180576d3c58ad592e6158621160a8c4c5cf 100644
+--- a/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java
++++ b/src/main/java/com/destroystokyo/paper/profile/CraftPlayerProfile.java
+@@ -183,13 +183,24 @@ public class CraftPlayerProfile implements PlayerProfile {
+ 
+         boolean isCompleteFromCache = this.completeFromCache(true, onlineMode);
+         if (onlineMode && (!isCompleteFromCache || textures && !hasTextures())) {
+-            GameProfile result = server.getMinecraftSessionService().fillProfileProperties(profile, true);
+-            if (result != null) {
+-                copyProfileProperties(result, this.profile, true);
+-            }
+-            if (this.profile.isComplete()) {
+-                server.getUserCache().saveProfile(this.profile);
++		    // Yatopia start
++            dev.tr7zw.yatopia.events.GameProfileLookupEvent event = new
++                    dev.tr7zw.yatopia.events.GameProfileLookupEvent(
++                            !org.bukkit.Bukkit.isPrimaryThread(), profile.getId(), profile.getName());
++            org.bukkit.Bukkit.getPluginManager().callEvent(event);
++            GameProfile eventProfile = event.getGameProfile();
++            if (eventProfile != null) {
++                this.profile = eventProfile;
++            } else {
++                GameProfile result = server.getMinecraftSessionService().fillProfileProperties(profile, true);
++                if (result != null) {
++                    copyProfileProperties(result, this.profile, true);
++                }
++                if (this.profile.isComplete()) {
++                    server.getUserCache().saveProfile(this.profile);
++                }
+             }
++		    // Yatopia end
+         }
+         return profile.isComplete() && (!onlineMode || !textures || hasTextures());
+     }
+diff --git a/src/main/java/net/minecraft/server/TileEntitySkull.java b/src/main/java/net/minecraft/server/TileEntitySkull.java
+index 579a81e521fdfabfa0318d06c6760a8ab7a88c1e..ab553f408b31cb7e2d281cc3d8fe42e19dc717d9 100644
+--- a/src/main/java/net/minecraft/server/TileEntitySkull.java
++++ b/src/main/java/net/minecraft/server/TileEntitySkull.java
+@@ -77,7 +77,18 @@ public class TileEntitySkull extends TileEntity /*implements ITickable*/ { // Pa
+ 
+                         if ( property == null )
+                         {
++                            // Yatopia start
++                            dev.tr7zw.yatopia.events.GameProfileLookupEvent event =
++                                    new dev.tr7zw.yatopia.events.GameProfileLookupEvent(
++                                            !org.bukkit.Bukkit.isPrimaryThread(), profile.getId(), profile.getName());
++                            org.bukkit.Bukkit.getPluginManager().callEvent(event);
++                            GameProfile eventProfile = event.getGameProfile();
++                            if (eventProfile != null) {
++                                profile = eventProfile;
++                            } else {
+                             profile = TileEntitySkull.sessionService.fillProfileProperties( profile, true );
++                            }
++                            // Yatopia end
+                         }
+                     }
+ 
