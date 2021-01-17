@@ -56,13 +56,13 @@ internal fun Project.createApplyPatchesTask(
             val wasGitSigningEnabled = temporarilyDisableGitSigning(projectDir)
 
             for (upstream in upstreams) {
-                project.gitCmd("checkout", "-b", "${upstream.name}-$folder")
+                project.gitCmd("checkout", "-b", "${upstream.name}-$folder", dir = projectDir)
                 // Apply patches
                 val patchDir = Path.of("${upstream.patchPath}/$folder")
 
                 if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled, projectDir)) continue
             }
-            project.gitCmd("checkout", "-b", "$forkName-$folder")
+            project.gitCmd("checkout", "-b", "$forkName-$folder", dir = projectDir)
             val patchDir = patchesDir.toPath()
             // Apply patches
             if (applyPatches(patchDir, forkName, name, wasGitSigningEnabled, projectDir)) continue
