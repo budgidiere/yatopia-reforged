@@ -4486,18 +4486,18 @@ index ca3c5150bcfe2a92b49ad5a27c23dd37a7054fbb..323d79a99402b0f6952b4fb873170069
          this.targetSelector.a(2, this.br);
          this.targetSelector.a(3, this.bs);
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b94acaeae6 100644
+index 2e623ef9be036ea467e9e41817c2eced018f8f93..0abfa34a8fa0088c2089645f54f85d4490a04bc9 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -32,6 +32,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
-         return entityliving.getMonsterType() != EnumMonsterType.UNDEAD && entityliving.ei();
-     };
-     private static final PathfinderTargetCondition bz = (new PathfinderTargetCondition()).a(20.0D).a(EntityWither.by);
+@@ -26,6 +26,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+     private final float[] bt = new float[2];
+     private final int[] bu = new int[2];
+     private final int[] bv = new int[2];
 +    private int shootCooldown = 0; // Purpur
- 
-     public EntityWither(EntityTypes<? extends EntityWither> entitytypes, World world) {
-         super(entitytypes, world);
-@@ -39,15 +40,122 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+     private int bw;
+     public final BossBattleServer bossBattle;
+     private static final Predicate<EntityLiving> by = (entityliving) -> {
+@@ -44,15 +45,122 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
          this.setHealth(this.getMaxHealth());
          this.getNavigation().d(true);
          this.f = 50;
@@ -4621,7 +4621,7 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
          this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, new Class[0]));
          this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget<>(this, EntityInsentient.class, 0, false, false, EntityWither.by));
      }
-@@ -189,6 +297,16 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -194,6 +302,16 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
  
      @Override
      protected void mobTick() {
@@ -4638,7 +4638,7 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
          int i;
  
          if (this.getInvul() > 0) {
-@@ -372,7 +490,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -377,7 +495,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
          this.bossBattle.removePlayer(entityplayer);
      }
  
@@ -4647,7 +4647,7 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
          if (i <= 0) {
              return this.locX();
          } else {
-@@ -383,11 +501,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -388,11 +506,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
          }
      }
  
@@ -4661,7 +4661,7 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
          if (i <= 0) {
              return this.locZ();
          } else {
-@@ -511,7 +629,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -516,7 +634,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
      }
  
      public static AttributeProvider.Builder eK() {
@@ -4670,7 +4670,7 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
      }
  
      public int getInvul() {
-@@ -523,11 +641,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -528,11 +646,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
      }
  
      public int getHeadTarget(int i) {
@@ -4683,8 +4683,8 @@ index 53482a420c356fd50e5ab6dd729a271d6594dac7..eff70c3e095363550071e0fe0df910b9
 +        if (!hasRider()) this.datawatcher.set(EntityWither.bo.get(i), j); // Purpur
      }
  
-     public boolean S_() {
-@@ -541,7 +659,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+     public final boolean isPowered() { return this.S_(); } // Paper - OBFHELPER
+@@ -547,7 +665,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
  
      @Override
      protected boolean n(Entity entity) {

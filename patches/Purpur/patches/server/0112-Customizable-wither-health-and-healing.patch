@@ -6,10 +6,10 @@ Subject: [PATCH] Customizable wither health and healing
 Adds the ability to customize the health of the wither, as well as the amount that it heals, and how often.
 
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index eff70c3e095363550071e0fe0df910b94acaeae6..29a0ede18828943157c2c08c682cbbf2723708ed 100644
+index 0abfa34a8fa0088c2089645f54f85d4490a04bc9..510797225d50de1565288c8df484384874050172 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -145,6 +145,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -150,6 +150,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
          skull.setPositionRaw(headX, headY, headZ);
          world.addEntity(skull);
      }
@@ -21,7 +21,7 @@ index eff70c3e095363550071e0fe0df910b94acaeae6..29a0ede18828943157c2c08c682cbbf2
      // Purpur end
  
      @Override
-@@ -348,7 +353,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -353,7 +358,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
  
              this.setInvul(i);
              if (this.ticksLived % 10 == 0) {
@@ -30,7 +30,7 @@ index eff70c3e095363550071e0fe0df910b94acaeae6..29a0ede18828943157c2c08c682cbbf2
              }
  
          } else {
-@@ -457,8 +462,10 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -462,8 +467,10 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
                  }
              }
  

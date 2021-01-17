@@ -246,10 +246,10 @@ index 319bb68f27f360bb36897c73a68ddeac64b67a6f..550decf12140596e63b57a7ee5940e4f
              }
  
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 29a0ede18828943157c2c08c682cbbf2723708ed..4d812ece123a2340955a1a6ee0ce61d5639d6b67 100644
+index 510797225d50de1565288c8df484384874050172..d77ef303562ca255d51cf527d7dc8be6a4b8facc 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
-@@ -317,7 +317,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -322,7 +322,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
          if (this.getInvul() > 0) {
              i = this.getInvul() - 1;
              if (i <= 0) {
@@ -258,7 +258,7 @@ index 29a0ede18828943157c2c08c682cbbf2723708ed..4d812ece123a2340955a1a6ee0ce61d5
                  // CraftBukkit start
                  // this.world.createExplosion(this, this.locX(), this.getHeadY(), this.locZ(), 7.0F, false, explosion_effect);
                  ExplosionPrimeEvent event = new ExplosionPrimeEvent(this.getBukkitEntity(), 7.0F, false);
-@@ -429,7 +429,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
+@@ -434,7 +434,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {
  
              if (this.bw > 0) {
                  --this.bw;
