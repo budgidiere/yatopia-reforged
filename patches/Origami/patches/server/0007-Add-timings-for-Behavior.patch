@@ -1,15 +1,11 @@
-From ce5e0c1114801a936682f87de8935d9d5d56487b Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Mon, 20 Apr 2020 17:41:09 +0100
 Subject: [PATCH] Add timings for Behavior
 
----
- src/main/java/co/aikar/timings/WorldTimingsHandler.java | 6 ++++++
- src/main/java/net/minecraft/server/Behavior.java        | 6 ++++++
- 2 files changed, 12 insertions(+)
 
 diff --git a/src/main/java/co/aikar/timings/WorldTimingsHandler.java b/src/main/java/co/aikar/timings/WorldTimingsHandler.java
-index 96aaaab5b7..5bcbf2e5ee 100644
+index 96aaaab5b7685c874463505f9d25e8a0a01a6e7c..5bcbf2e5ee02764425802a4113d28d03a2a49dc8 100644
 --- a/src/main/java/co/aikar/timings/WorldTimingsHandler.java
 +++ b/src/main/java/co/aikar/timings/WorldTimingsHandler.java
 @@ -140,4 +140,10 @@ public class WorldTimingsHandler {
@@ -24,28 +20,27 @@ index 96aaaab5b7..5bcbf2e5ee 100644
 +    // Origami end
  }
 diff --git a/src/main/java/net/minecraft/server/Behavior.java b/src/main/java/net/minecraft/server/Behavior.java
-index 7915334116..04ac83b5d9 100644
+index 0b9d469a92decfb0632805791868ef7faa88c535..8f480862f0f3980963019264769887a511a5f88b 100644
 --- a/src/main/java/net/minecraft/server/Behavior.java
 +++ b/src/main/java/net/minecraft/server/Behavior.java
-@@ -15,6 +15,7 @@ public abstract class Behavior<E extends EntityLiving> {
-     private final String configKey;
-     private static final String RATE_TYPE = "behavior";
-     // Origami end
+@@ -9,6 +9,7 @@ public abstract class Behavior<E extends EntityLiving> {
+     protected final Map<MemoryModuleType<?>, MemoryStatus> a;
+     private Behavior.Status b; public final Behavior.Status getStatus() { return this.b; } // Tuinity - OBFHELPER
+     private long c;
 +    co.aikar.timings.Timing timing; // Origami - behavior timing
+     private final int d;
+     private final int e;
  
-     public Behavior(Map<MemoryModuleType<?>, MemoryStatus> map) {
-         this(map, 60);
-@@ -37,6 +38,9 @@ public abstract class Behavior<E extends EntityLiving> {
-         }
-         this.configKey = key;
-         // Origami end
+@@ -31,13 +32,18 @@ public abstract class Behavior<E extends EntityLiving> {
+         return this.b;
+     }
+ 
 +        // Origami start - behavior timing
 +        timing = co.aikar.timings.WorldTimingsHandler.getBehaviorTimings(key);
 +        // Origami end
-     }
- 
-     public Behavior.Status a() {
-@@ -55,7 +59,9 @@ public abstract class Behavior<E extends EntityLiving> {
+     public final boolean e(WorldServer worldserver, E e0, long i) {
+         if (this.a(e0) && this.a(worldserver, e0)) {
+             this.b = Behavior.Status.RUNNING;
              int j = this.d + worldserver.getRandom().nextInt(this.e + 1 - this.d);
  
              this.c = i + (long) j;
@@ -55,6 +50,3 @@ index 7915334116..04ac83b5d9 100644
              return true;
          } else {
              return false;
--- 
-2.25.1.windows.1
-

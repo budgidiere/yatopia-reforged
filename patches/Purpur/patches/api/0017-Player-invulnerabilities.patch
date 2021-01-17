@@ -5,7 +5,7 @@ Subject: [PATCH] Player invulnerabilities
 
 
 diff --git a/src/main/java/org/bukkit/entity/Player.java b/src/main/java/org/bukkit/entity/Player.java
-index 7fd2085fa24779df1eab354532611d3642b37a27..c3288513f240daf412d106e7d8cea1823b17a2d7 100644
+index 7fd2085fa24779df1eab354532611d3642b37a27..a79703115da811397ee6b7c6c079846af537fd12 100644
 --- a/src/main/java/org/bukkit/entity/Player.java
 +++ b/src/main/java/org/bukkit/entity/Player.java
 @@ -1958,5 +1958,26 @@ public interface Player extends HumanEntity, Conversable, OfflinePlayer, PluginM
@@ -15,21 +15,21 @@ index 7fd2085fa24779df1eab354532611d3642b37a27..c3288513f240daf412d106e7d8cea182
 +
 +    /**
 +     * Check if player is invulnerable from recently spawning or accepting a resource pack
-+     * 
++     *
 +     * @return True if invulnerable
 +     */
 +    boolean isSpawnInvulnerable();
 +
 +    /**
 +     * Get invulnerable ticks remaining
-+     * 
++     *
 +     * @return Invulnerable ticks
 +     */
 +    int getSpawnInvulnerableTicks();
 +
 +    /**
 +     * Set invulnerable ticks remaining
-+     * 
++     *
 +     * @param invulnerableTicks Invulnerable ticks remaining
 +     */
 +    void setSpawnInvulnerableTicks(int invulnerableTicks);

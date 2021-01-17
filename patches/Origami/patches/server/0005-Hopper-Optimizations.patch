@@ -1,4 +1,4 @@
-From 0db24128e037980648938de988fe2d799fc4a527 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Tue, 24 Mar 2020 17:40:50 +0100
 Subject: [PATCH] Hopper Optimizations
@@ -7,22 +7,14 @@ Subject: [PATCH] Hopper Optimizations
 chain.
 - Add config option to increase the full hopper cooldown
 - Only set check cooldown if it's bigger than already set cooldown
----
- .../de/minebench/origami/OrigamiConfig.java   |  6 +++
- .../net/minecraft/server/BlockComposter.java  |  1 +
- .../java/net/minecraft/server/EntityItem.java |  7 +++
- .../server/EntityMinecartContainer.java       | 21 +++++++-
- .../minecraft/server/TileEntityContainer.java | 10 ++++
- .../minecraft/server/TileEntityHopper.java    | 49 ++++++++++++++++---
- 6 files changed, 84 insertions(+), 10 deletions(-)
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index fe135b7f1a..3da6c6ebda 100644
+index c029a2a00c484a275fc95e5e46a873808dfbf0bd..6cc61acbd2e9b666f82508dde6022ab577d7f64a 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
-@@ -169,6 +169,12 @@ public final class OrigamiConfig {
-                 Bukkit.getLogger().info("Farm detection radius: " + pigmenFarmsRadius + ", count: " + pigmenFarmsCount);
-             }
+@@ -120,6 +120,12 @@ public final class OrigamiConfig {
+ 
+             return config.getDouble("worlds." + worldName + "." + path, config.getDouble("worlds.default." + path, dfl));
          }
 +        public boolean tickEmptyHoppers = false;
 +        public int fullHopperCooldown = 128;
@@ -32,9 +24,10 @@ index fe135b7f1a..3da6c6ebda 100644
 +        }
      }
  
-     public static boolean teleportingOfVehiclesWithPassenger = true;
+ }
+\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/BlockComposter.java b/src/main/java/net/minecraft/server/BlockComposter.java
-index ccb61d656b..55a5999080 100644
+index ccb61d656b57f02efaeb60df4a70169aef302eed..55a5999080b831217b88ed3657e95218fe982c18 100644
 --- a/src/main/java/net/minecraft/server/BlockComposter.java
 +++ b/src/main/java/net/minecraft/server/BlockComposter.java
 @@ -250,6 +250,7 @@ public class BlockComposter extends Block implements IInventoryHolder {
@@ -46,10 +39,10 @@ index ccb61d656b..55a5999080 100644
  
      }
 diff --git a/src/main/java/net/minecraft/server/EntityItem.java b/src/main/java/net/minecraft/server/EntityItem.java
-index bc4f84c885..e97c801f82 100644
+index bd8b130f0d370285b956ee8d8932cb95cc349163..1f92b18d1fbd86c2be13ea3e077c0c596e17686d 100644
 --- a/src/main/java/net/minecraft/server/EntityItem.java
 +++ b/src/main/java/net/minecraft/server/EntityItem.java
-@@ -135,6 +135,13 @@ public class EntityItem extends Entity {
+@@ -138,6 +138,13 @@ public class EntityItem extends Entity {
                  }
              }
  
@@ -64,7 +57,7 @@ index bc4f84c885..e97c801f82 100644
                  // CraftBukkit start - fire ItemDespawnEvent
                  if (org.bukkit.craftbukkit.event.CraftEventFactory.callItemDespawnEvent(this).isCancelled()) {
 diff --git a/src/main/java/net/minecraft/server/EntityMinecartContainer.java b/src/main/java/net/minecraft/server/EntityMinecartContainer.java
-index 67ff7fe6ab..c8062b12e2 100644
+index 574838bd33a46e464ff7d801345613a3351f487f..9b5146fcf618f5bebc71fdfd8e06294a0226e8c2 100644
 --- a/src/main/java/net/minecraft/server/EntityMinecartContainer.java
 +++ b/src/main/java/net/minecraft/server/EntityMinecartContainer.java
 @@ -137,7 +137,6 @@ public abstract class EntityMinecartContainer extends EntityMinecartAbstract imp
@@ -103,7 +96,7 @@ index 67ff7fe6ab..c8062b12e2 100644
      @Override
      public boolean a(EntityHuman entityhuman) {
 diff --git a/src/main/java/net/minecraft/server/TileEntityContainer.java b/src/main/java/net/minecraft/server/TileEntityContainer.java
-index 74390aebd3..9ce4f340d0 100644
+index 74390aebd353c969353a6efc0904bafe30774d65..9ce4f340d097132401054a1bb38abb73aa6a5fb1 100644
 --- a/src/main/java/net/minecraft/server/TileEntityContainer.java
 +++ b/src/main/java/net/minecraft/server/TileEntityContainer.java
 @@ -84,4 +84,14 @@ public abstract class TileEntityContainer extends TileEntity implements IInvento
@@ -122,7 +115,7 @@ index 74390aebd3..9ce4f340d0 100644
 +    // Origami end
  }
 diff --git a/src/main/java/net/minecraft/server/TileEntityHopper.java b/src/main/java/net/minecraft/server/TileEntityHopper.java
-index d432de40eb..271c55d860 100644
+index d432de40eba2767f4ced4d9c642c9d2033acd0ea..271c55d8604680cb995a4dd5d7be56ed309c099f 100644
 --- a/src/main/java/net/minecraft/server/TileEntityHopper.java
 +++ b/src/main/java/net/minecraft/server/TileEntityHopper.java
 @@ -19,8 +19,9 @@ import org.bukkit.inventory.Inventory;
@@ -259,6 +252,3 @@ index d432de40eb..271c55d860 100644
                  this.a(() -> {
                      return a((IInventory) this, (EntityItem) entity);
                  });
--- 
-2.25.1.windows.1
-

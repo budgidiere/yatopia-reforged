@@ -218,7 +218,7 @@ index e95fc7d98b70c84f3bf94440da977deb2d541e46..ab1085091fefea3a3fa15f7028bec050
      // Tuinity end - optimise pathfinder collision detection
  
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 097715bc66a2db4fdebcf8ed53aed459dfb43fa6..a125489d6a3b202d7e2b3d7df26fd72b81f2bd98 100644
+index f4cafdfd988f79e718a0fb2e464e00166fdc6a89..f292e15746a947c580aa93e0a23dbc032eccb561 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -785,7 +785,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke

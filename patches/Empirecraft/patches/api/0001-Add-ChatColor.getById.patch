@@ -4,12 +4,9 @@ Date: Mon, 24 Apr 2017 20:27:23 -0400
 Subject: [PATCH] Add ChatColor.getById
 
 Bukkit has had a map of this for years and it was totally unused...
----
- src/main/java/org/bukkit/ChatColor.java | 20 ++++++++++++++++++++
- 1 file changed, 20 insertions(+)
 
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index 4594701d77c5d0f744bece871b98d9f6f73eb5a7..06bdfddb7b1acb7bb7b347ad1aa13bff0c823ab1 100644
+index 499b222dee1f11d497a29a9a263a5596401ca1eb..15a5f78d8222846ce1a8ce12f405610509718abb 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -263,6 +263,15 @@ public enum ChatColor {

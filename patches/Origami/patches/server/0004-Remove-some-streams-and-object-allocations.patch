@@ -1,15 +1,12 @@
-From 787eea7822521ee0ccbc9da9a1549c5843fb7713 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Thu, 30 Jan 2020 21:50:40 +0100
 Subject: [PATCH] Remove some streams and object allocations
 
 Partially based on a patch in Spottedleaf's Paper fork
----
- src/main/java/net/minecraft/server/ChunkMap.java | 14 ++++++++------
- 1 file changed, 8 insertions(+), 6 deletions(-)
 
 diff --git a/src/main/java/net/minecraft/server/ChunkMap.java b/src/main/java/net/minecraft/server/ChunkMap.java
-index 7bfb5cb728..60f184a0ef 100644
+index 7bfb5cb72820c2e42c2fcf889291b04247b09cab..60f184a0ef2f2011b89385a418f10b8300d88892 100644
 --- a/src/main/java/net/minecraft/server/ChunkMap.java
 +++ b/src/main/java/net/minecraft/server/ChunkMap.java
 @@ -13,9 +13,10 @@ public abstract class ChunkMap extends LightEngineGraph {
@@ -40,6 +37,3 @@ index 7bfb5cb728..60f184a0ef 100644
  
          for (int k1 = -1; k1 <= 1; ++k1) {
              for (int l1 = -1; l1 <= 1; ++l1) {
--- 
-2.25.1.windows.1
-

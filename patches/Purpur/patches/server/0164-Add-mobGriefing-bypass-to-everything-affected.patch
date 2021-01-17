@@ -159,7 +159,7 @@ index 3836d772d07efb7e9a9e7ecc7141330f0cd15801..8bceb152d9c7a3227c4bd3bb47964cf6
                      IBlockData iblockdata = Blocks.WITHER_ROSE.getBlockData();
  
 diff --git a/src/main/java/net/minecraft/server/EntityRabbit.java b/src/main/java/net/minecraft/server/EntityRabbit.java
-index 75f42e91449de71e154e2169ea986ff09224e2f0..9017e56d4ecff810b07271362dce1c1354a3404d 100644
+index 0583fc55056a29e7629c76b72800c727401a4a83..6559dcafac6cb9673dccdbd44f18e9802b3ac3c2 100644
 --- a/src/main/java/net/minecraft/server/EntityRabbit.java
 +++ b/src/main/java/net/minecraft/server/EntityRabbit.java
 @@ -462,7 +462,7 @@ public class EntityRabbit extends EntityAnimal {
@@ -246,7 +246,7 @@ index 319bb68f27f360bb36897c73a68ddeac64b67a6f..550decf12140596e63b57a7ee5940e4f
              }
  
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index 71b6fc480617f040029b2201f24d05affeb90b70..48d27d58358e0568579d69320f47e751ea4ec37a 100644
+index 29a0ede18828943157c2c08c682cbbf2723708ed..4d812ece123a2340955a1a6ee0ce61d5639d6b67 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
 @@ -317,7 +317,7 @@ public class EntityWither extends EntityMonster implements IRangedEntity {

@@ -25,7 +25,7 @@ index 9796b4e57d6680c9f0dc76decdd985572daafb7e..f15ec5c45d95c6828ed628451917ac34
          super(EntityTypes.PLAYER, world);
          this.bL = ItemStack.b;
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 9f5b7243ccbe0729a061345c25033d9145b91b3f..dc69cba40806782e0b8ffd3b77aa6298feddb35d 100644
+index 9f5b7243ccbe0729a061345c25033d9145b91b3f..6bab47ab2583735c36d74d849ab0923494a265db 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -1904,8 +1904,54 @@ public class EntityPlayer extends EntityHuman implements ICrafting {
@@ -43,7 +43,7 @@ index 9f5b7243ccbe0729a061345c25033d9145b91b3f..dc69cba40806782e0b8ffd3b77aa6298
 +        if (this.isAfk == setAfk) {
 +            return;
 +        }
-+        
++
 +        String msg = setAfk ? net.pl3x.purpur.PurpurConfig.afkBroadcastAway : net.pl3x.purpur.PurpurConfig.afkBroadcastBack;
 +
 +        net.pl3x.purpur.event.PlayerAFKEvent event = new net.pl3x.purpur.event.PlayerAFKEvent(getBukkitEntity(), setAfk, world.purpurConfig.idleTimeoutKick, msg, !Bukkit.isPrimaryThread());

@@ -1,18 +1,14 @@
-From 0b8a2591c4f433b9c271250d9b6ba47a4b3aff35 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Tue, 31 Mar 2020 21:43:04 +0100
 Subject: [PATCH] Add option to disable observer clocks
 
----
- src/main/java/de/minebench/origami/OrigamiConfig.java | 5 +++++
- src/main/java/net/minecraft/server/BlockObserver.java | 3 ++-
- 2 files changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index 17539a7bd7..10d5b9dce1 100644
+index 6cc61acbd2e9b666f82508dde6022ab577d7f64a..023fb9846225fbb8ead589291387783244a70631 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
-@@ -175,6 +175,11 @@ public final class OrigamiConfig {
+@@ -126,6 +126,11 @@ public final class OrigamiConfig {
              tickEmptyHoppers = getBoolean("tick-empty-hoppers", tickEmptyHoppers);
              fullHopperCooldown = getInt("ticks-per.full-hopper-cooldown", fullHopperCooldown);
          }
@@ -23,9 +19,10 @@ index 17539a7bd7..10d5b9dce1 100644
 +        }
      }
  
-     public static boolean teleportingOfVehiclesWithPassenger = true;
+ }
+\ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/BlockObserver.java b/src/main/java/net/minecraft/server/BlockObserver.java
-index 7dfe632523..29c3f328f5 100644
+index 7dfe632523f7fc4426a035b6bf23917b2ea80389..29c3f328f512ffc6c423a5996e1377040f6c4712 100644
 --- a/src/main/java/net/minecraft/server/BlockObserver.java
 +++ b/src/main/java/net/minecraft/server/BlockObserver.java
 @@ -52,7 +52,8 @@ public class BlockObserver extends BlockDirectional {
@@ -38,6 +35,3 @@ index 7dfe632523..29c3f328f5 100644
              this.a(generatoraccess, blockposition);
          }
  
--- 
-2.25.1.windows.1
-

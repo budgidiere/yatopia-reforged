@@ -332,7 +332,7 @@ index a1578aade4a535144b5e40277c902f2e9ab9e940..4a3469aca9f9e47d2ea3f3bae6ce77f5
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/EntityHorse.java b/src/main/java/net/minecraft/server/EntityHorse.java
-index 669bce5d9806c80bddc247fe103ff20dc6aaa8a5..e78e89d187f923239f23e37d5141e2e69b056360 100644
+index b19995f962180a44ff388d58a26cc5782d0826e4..005281dbced10fa72ccd62ce63193f91824deaf7 100644
 --- a/src/main/java/net/minecraft/server/EntityHorse.java
 +++ b/src/main/java/net/minecraft/server/EntityHorse.java
 @@ -22,6 +22,21 @@ public class EntityHorse extends EntityHorseAbstract {
@@ -838,7 +838,7 @@ index 16a4df27c557e2d4a0fd4f48317307b884c2688c..815ba3062e0cbc4400f4dae9f80ce8f6
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/EntityRabbit.java b/src/main/java/net/minecraft/server/EntityRabbit.java
-index 654cd036a8e4aa4499f10f528b684e003c469c9a..75f42e91449de71e154e2169ea986ff09224e2f0 100644
+index b7f4d61f0038d865ef9ee3c14f6dc146f8de5ac4..0583fc55056a29e7629c76b72800c727401a4a83 100644
 --- a/src/main/java/net/minecraft/server/EntityRabbit.java
 +++ b/src/main/java/net/minecraft/server/EntityRabbit.java
 @@ -35,6 +35,11 @@ public class EntityRabbit extends EntityAnimal {

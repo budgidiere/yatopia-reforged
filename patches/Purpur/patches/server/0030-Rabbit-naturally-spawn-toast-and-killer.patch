@@ -5,7 +5,7 @@ Subject: [PATCH] Rabbit naturally spawn toast and killer
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityRabbit.java b/src/main/java/net/minecraft/server/EntityRabbit.java
-index 80a4a71753a1fd9f62e75f0b4ea9307ed7072c4f..25a9b7906be35e981566610c7d08aa8df5050d74 100644
+index 80a4a71753a1fd9f62e75f0b4ea9307ed7072c4f..f17608730fca96af4f9779863a8c25723a3bd5cf 100644
 --- a/src/main/java/net/minecraft/server/EntityRabbit.java
 +++ b/src/main/java/net/minecraft/server/EntityRabbit.java
 @@ -297,6 +297,10 @@ public class EntityRabbit extends EntityAnimal {
@@ -32,7 +32,7 @@ index 80a4a71753a1fd9f62e75f0b4ea9307ed7072c4f..25a9b7906be35e981566610c7d08aa8d
 +            return 98;
 +        }
 +        // Purpur end
-+        
++
          BiomeBase biomebase = generatoraccess.getBiome(this.getChunkCoordinates());
          int i = this.random.nextInt(100);
  

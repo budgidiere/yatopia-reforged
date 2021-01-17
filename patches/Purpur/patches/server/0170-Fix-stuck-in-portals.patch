@@ -25,7 +25,7 @@ index 31642841b2954dacdebed8d40f81381330fcfcab..6861683cf060df4f173ffc01ebd9de70
  
              this.inPortal = true;
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index 53125d7fc29e87f4bbf37ee77518222f6be1a4f4..13b745b333137ed4d71755a0fc7b5f3fb4ab972e 100644
+index 670b3d72c1d339f2dd05efbd243e7c2e896e2f79..7596eaf605bf73dd44c06b66bcc0e5a36242fe7a 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -1180,6 +1180,7 @@ public class EntityPlayer extends EntityHuman implements ICrafting {

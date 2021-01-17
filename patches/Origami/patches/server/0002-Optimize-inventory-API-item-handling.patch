@@ -1,14 +1,11 @@
-From b5a15506a47329fd6b736da83a8f8163d3961e98 Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Sun, 24 Nov 2019 23:00:58 +0100
 Subject: [PATCH] Optimize inventory API item handling
 
----
- .../craftbukkit/inventory/CraftInventory.java   | 17 +++++++++++++----
- 1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
-index bba9bddc1c..70408d8933 100644
+index c2802c5bfb5ec82daad32d3a3375f4428ae76dfd..ec40f1933cf3e9da935d6d6def0e3096f7c00028 100644
 --- a/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 +++ b/src/main/java/org/bukkit/craftbukkit/inventory/CraftInventory.java
 @@ -273,11 +273,13 @@ public class CraftInventory implements Inventory {
@@ -64,6 +61,3 @@ index bba9bddc1c..70408d8933 100644
                              break;
                          }
                      }
--- 
-2.25.1.windows.1
-

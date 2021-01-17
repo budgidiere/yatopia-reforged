@@ -5,7 +5,7 @@ Subject: [PATCH] Player invulnerabilities
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityPlayer.java b/src/main/java/net/minecraft/server/EntityPlayer.java
-index dc69cba40806782e0b8ffd3b77aa6298feddb35d..ca63c583524c760072933602079ffe34796ff83c 100644
+index 6bab47ab2583735c36d74d849ab0923494a265db..6e292d91d509327fa5b9dea947811d04e78e1e93 100644
 --- a/src/main/java/net/minecraft/server/EntityPlayer.java
 +++ b/src/main/java/net/minecraft/server/EntityPlayer.java
 @@ -150,6 +150,8 @@ public class EntityPlayer extends EntityHuman implements ICrafting {

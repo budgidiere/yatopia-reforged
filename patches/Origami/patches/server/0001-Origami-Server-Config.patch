@@ -1,19 +1,12 @@
-From d759f2c04733c78bff7d1560455203d3aefba35b Mon Sep 17 00:00:00 2001
+From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: Phoenix616 <mail@moep.tv>
 Date: Sun, 24 Nov 2019 22:41:38 +0100
 Subject: [PATCH] Origami Server Config
 
----
- .../de/minebench/origami/OrigamiConfig.java   | 117 ++++++++++++++++++
- src/main/java/net/minecraft/server/World.java |   3 +
- .../org/bukkit/craftbukkit/CraftServer.java   |   2 +
- .../java/org/bukkit/craftbukkit/Main.java     |   9 ++
- 4 files changed, 131 insertions(+)
- create mode 100644 src/main/java/de/minebench/origami/OrigamiConfig.java
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
 new file mode 100644
-index 0000000000..fe7330fabe
+index 0000000000000000000000000000000000000000..fe7330fabe386966c2d203a190a00a785ea21be0
 --- /dev/null
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
 @@ -0,0 +1,117 @@
@@ -136,53 +129,53 @@ index 0000000000..fe7330fabe
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index 9ed21f434c..1cfbfa235d 100644
+index f2512fd66849cfa743cf7bfdffcb4c26178ffebf..ffb0b7e429a512ee8d065541ac1d05aaba5fc963 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
-@@ -94,6 +94,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
-     public final com.destroystokyo.paper.PaperWorldConfig paperConfig; // Paper
-     public final ChunkPacketBlockController chunkPacketBlockController; // Paper - Anti-Xray
+@@ -97,6 +97,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+     public final com.tuinity.tuinity.config.TuinityConfig.WorldConfig tuinityConfig; // Tuinity - Server Config
+     public final net.pl3x.purpur.PurpurWorldConfig purpurConfig; // Purpur
  
 +    public final de.minebench.origami.OrigamiConfig.WorldConfig origamiConfig; // Origami - World Config
 +
      public final co.aikar.timings.WorldTimingsHandler timings; // Paper
      public static BlockPosition lastPhysicsProblem; // Spigot
      private org.spigotmc.TickLimiter entityLimiter;
-@@ -124,6 +126,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
-     protected World(WorldDataMutable worlddatamutable, ResourceKey<World> resourcekey, final DimensionManager dimensionmanager, Supplier<GameProfilerFiller> supplier, boolean flag, boolean flag1, long i, org.bukkit.generator.ChunkGenerator gen, org.bukkit.World.Environment env, java.util.concurrent.Executor executor) { // Paper
-         this.spigotConfig = new org.spigotmc.SpigotWorldConfig(((WorldDataServer) worlddatamutable).getName()); // Spigot
-         this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((WorldDataServer) worlddatamutable).getName(), this.spigotConfig); // Paper
+@@ -118,6 +120,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+     boolean hasBreedingCooldown(java.util.UUID player, Class<? extends EntityAnimal> animalType) {
+         return this.playerBreedingCooldowns.getIfPresent(new BreedingCooldownPair(player, animalType)) != null;
+     }
 +        this.origamiConfig = new de.minebench.origami.OrigamiConfig.WorldConfig(((WorldDataServer)worlddatamutable).getName()); // Origami - World Config
-         this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this, executor) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
-         this.generator = gen;
-         this.world = new CraftWorld((WorldServer) this, gen, env);
+ 
+     void addBreedingCooldown(java.util.UUID player, Class<? extends EntityAnimal> animalType) {
+         this.playerBreedingCooldowns.put(new BreedingCooldownPair(player, animalType), new Object());
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index 1406d17e66..d4e9bdf922 100644
+index b3bc2d908a028fe182f4be2ed4d2bb6a1e9ec5cb..ea94b5362605a0deca79b67e30988af25c3c179f 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -861,6 +861,7 @@ public final class CraftServer implements Server {
- 
-         org.spigotmc.SpigotConfig.init((File) console.options.valueOf("spigot-settings")); // Spigot
-         com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
-+        de.minebench.origami.OrigamiConfig.init((File) console.options.valueOf("origami-settings")); // Origami - Server Config
-         for (WorldServer world : console.getWorlds()) {
-             world.worldDataServer.setDifficulty(config.difficulty);
-             world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
-@@ -895,6 +896,7 @@ public final class CraftServer implements Server {
-             }
-             world.spigotConfig.init(); // Spigot
-             world.paperConfig.init(); // Paper
-+            world.origamiConfig.init(); // Origami - World Config
+@@ -855,6 +855,7 @@ public final class CraftServer implements Server {
          }
+         try {
+             playerList.getProfileBans().load();
++        de.minebench.origami.OrigamiConfig.init((File) console.options.valueOf("origami-settings")); // Origami - Server Config
+         } catch (IOException ex) {
+             logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
+         }
+@@ -889,6 +890,7 @@ public final class CraftServer implements Server {
+             } else {
+                 world.ticksPerWaterAmbientSpawns = this.getTicksPerWaterAmbientSpawns();
+             }
++            world.origamiConfig.init(); // Origami - World Config
  
-         Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
+             if (this.getTicksPerAmbientSpawns() < 0) {
+                 world.ticksPerAmbientSpawns = 1;
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
-index d3bfdf97ea..088ccedc76 100644
+index b10873022efc8f01ef172e86cad07831d7bf0d5e..448538cc8a3d16b028a0a6f0f05c9370a02f4259 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java
 +++ b/src/main/java/org/bukkit/craftbukkit/Main.java
-@@ -139,6 +139,14 @@ public class Main {
+@@ -154,6 +154,14 @@ public class Main {
                          .describedAs("Yml file");
-                 // Paper end
+                 // Purpur end
  
 +                // Origami Start - Server Config
 +                acceptsAll(asList("origami", "origami-settings"), "File for origami settings")
@@ -195,7 +188,7 @@ index d3bfdf97ea..088ccedc76 100644
                  // Paper start
                  acceptsAll(asList("server-name"), "Name of the server")
                          .withRequiredArg()
-@@ -272,6 +280,7 @@ public class Main {
+@@ -287,6 +295,7 @@ public class Main {
                  }
                  // Paper end
                  System.setProperty( "library.jansi.version", "Paper" ); // Paper - set meaningless jansi version to prevent git builds from crashing on Windows
@@ -203,6 +196,3 @@ index d3bfdf97ea..088ccedc76 100644
                  System.out.println("Loading libraries, please wait...");
                  net.minecraft.server.Main.main(options);
              } catch (Throwable t) {
--- 
-2.25.1.windows.1
-

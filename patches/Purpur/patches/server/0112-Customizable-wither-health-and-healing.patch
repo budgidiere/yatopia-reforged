@@ -6,7 +6,7 @@ Subject: [PATCH] Customizable wither health and healing
 Adds the ability to customize the health of the wither, as well as the amount that it heals, and how often.
 
 diff --git a/src/main/java/net/minecraft/server/EntityWither.java b/src/main/java/net/minecraft/server/EntityWither.java
-index f68cf834aa65cc4bbb1eb9901586395d41770955..71b6fc480617f040029b2201f24d05affeb90b70 100644
+index eff70c3e095363550071e0fe0df910b94acaeae6..29a0ede18828943157c2c08c682cbbf2723708ed 100644
 --- a/src/main/java/net/minecraft/server/EntityWither.java
 +++ b/src/main/java/net/minecraft/server/EntityWither.java
 @@ -145,6 +145,11 @@ public class EntityWither extends EntityMonster implements IRangedEntity {

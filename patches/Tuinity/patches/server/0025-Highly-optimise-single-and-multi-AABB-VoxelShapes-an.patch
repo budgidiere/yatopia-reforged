@@ -599,7 +599,7 @@ index 95ef96286855624590b72d69514b0fc0e08fddba..73163b417af7e522a4509bf9c1ab56d6
          T t0 = this.h.a(this.a.a(i));
  
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index d223b7ed3203ab3ae27d49f1e7d7cb7fe957bf21..3ac22950132f66c8ca71aeac136c10cd360fb621 100644
+index 6548ffe332460e66409b345bae2f5222d32cec71..df74bb1c222593334ce9cde53881370a2c3be15a 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
 @@ -136,7 +136,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
@@ -819,7 +819,7 @@ index d223b7ed3203ab3ae27d49f1e7d7cb7fe957bf21..3ac22950132f66c8ca71aeac136c10cd
      public static double c(Vec3D vec3d) {
          return vec3d.x * vec3d.x + vec3d.z * vec3d.z;
      }
-@@ -2026,9 +2195,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2027,9 +2196,9 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
              float f1 = this.size.width * 0.8F;
              AxisAlignedBB axisalignedbb = AxisAlignedBB.g((double) f1, 0.10000000149011612D, (double) f1).d(this.locX(), this.getHeadY(), this.locZ());
  
@@ -831,7 +831,7 @@ index d223b7ed3203ab3ae27d49f1e7d7cb7fe957bf21..3ac22950132f66c8ca71aeac136c10cd
          }
      }
  
-@@ -2036,10 +2205,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2037,10 +2206,12 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          return EnumInteractionResult.PASS;
      }
  
