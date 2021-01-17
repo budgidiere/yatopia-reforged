@@ -5,10 +5,10 @@ Subject: [PATCH] Cows eat mushrooms
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 0e465a2107bd27e59a437c48672068a951ccccff..911a942d191659bdd055b2f1374246a829111330 100644
+index 6ae1e4aa47be4fa65209960c4ad079bf34a3fd76..21e0c0a6522be890d9cf8419dfd3a79efc532241 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -2787,6 +2787,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -2798,6 +2798,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          this.invulnerable = flag;
      }
  

@@ -5,10 +5,10 @@ Subject: [PATCH] Item entity immunities
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index 8ae0e83179026d09f318ffaae751c942ecd48c41..dbf6e99ec49841336c81eadfd193216583b03a3b 100644
+index f5d45f010b0930b9a03c50b9d9f5a27e10c219b5..551482ac29e69cbf76b0a71f8fc1cdac69a693ef 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -1481,6 +1481,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -1492,6 +1492,7 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
  
      }
  

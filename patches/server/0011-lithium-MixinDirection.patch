@@ -7,7 +7,7 @@ Original code by JellySquid, licensed under GNU Lesser General Public License v3
 you can find the original code on https://github.com/jellysquid3/lithium-fabric/tree/1.16.x/fabric (Yarn mappings)
 
 diff --git a/src/main/java/net/minecraft/server/EnumDirection.java b/src/main/java/net/minecraft/server/EnumDirection.java
-index 83366996a0f9ae4684cc5424ace7630cc72b75f7..f4fe50507bd8960bee23ff9e11e2780063d299a7 100644
+index ab699659bfd199662917e961b248a8a7bdb61cfb..a2bb8858bad6b2e8d8264065eb91db4cfea8be7a 100644
 --- a/src/main/java/net/minecraft/server/EnumDirection.java
 +++ b/src/main/java/net/minecraft/server/EnumDirection.java
 @@ -20,13 +20,13 @@ public enum EnumDirection implements INamable {

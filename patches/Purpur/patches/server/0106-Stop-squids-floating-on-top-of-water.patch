@@ -5,10 +5,10 @@ Subject: [PATCH] Stop squids floating on top of water
 
 
 diff --git a/src/main/java/net/minecraft/server/Entity.java b/src/main/java/net/minecraft/server/Entity.java
-index cf13b30c71e093296ffa02c6f1383de405ee34d3..3002dbaba08a5567e7e173f47f5973a8d6b4075a 100644
+index 2398c557c3a5fbb9264909a5add07fd933c4b13d..34c45c1f788c585a423f636b798125f37b76b3bb 100644
 --- a/src/main/java/net/minecraft/server/Entity.java
 +++ b/src/main/java/net/minecraft/server/Entity.java
-@@ -3457,8 +3457,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
+@@ -3468,8 +3468,13 @@ public abstract class Entity implements INamableTileEntity, ICommandListener, Ke
          this.lastYaw = this.yaw;
      }
  
