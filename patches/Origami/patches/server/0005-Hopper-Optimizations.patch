@@ -9,13 +9,14 @@ chain.
 - Only set check cooldown if it's bigger than already set cooldown
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index c029a2a00c484a275fc95e5e46a873808dfbf0bd..6cc61acbd2e9b666f82508dde6022ab577d7f64a 100644
+index a1a585f5b4b2c10c41b184636149c8dde2a3ae51..a5f828228f59fe656f48d1a703a9d06f2a120f5a 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
-@@ -120,6 +120,12 @@ public final class OrigamiConfig {
- 
-             return config.getDouble("worlds." + worldName + "." + path, config.getDouble("worlds.default." + path, dfl));
+@@ -120,6 +120,13 @@ public final class OrigamiConfig {
+                 Bukkit.getLogger().info("Returning matching chunk rom fast search directly instead of loading it.");
+             }
          }
++        
 +        public boolean tickEmptyHoppers = false;
 +        public int fullHopperCooldown = 128;
 +        private void hopperOptimizations() {

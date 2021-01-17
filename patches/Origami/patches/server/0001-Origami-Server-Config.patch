@@ -129,7 +129,7 @@ index 0000000000000000000000000000000000000000..fe7330fabe386966c2d203a190a00a78
 +}
 \ No newline at end of file
 diff --git a/src/main/java/net/minecraft/server/World.java b/src/main/java/net/minecraft/server/World.java
-index f2512fd66849cfa743cf7bfdffcb4c26178ffebf..ffb0b7e429a512ee8d065541ac1d05aaba5fc963 100644
+index f2512fd66849cfa743cf7bfdffcb4c26178ffebf..b47bc7cadd34f4592605c1ecfdfcb33e2d580034 100644
 --- a/src/main/java/net/minecraft/server/World.java
 +++ b/src/main/java/net/minecraft/server/World.java
 @@ -97,6 +97,8 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
@@ -141,34 +141,34 @@ index f2512fd66849cfa743cf7bfdffcb4c26178ffebf..ffb0b7e429a512ee8d065541ac1d05aa
      public final co.aikar.timings.WorldTimingsHandler timings; // Paper
      public static BlockPosition lastPhysicsProblem; // Spigot
      private org.spigotmc.TickLimiter entityLimiter;
-@@ -118,6 +120,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
-     boolean hasBreedingCooldown(java.util.UUID player, Class<? extends EntityAnimal> animalType) {
-         return this.playerBreedingCooldowns.getIfPresent(new BreedingCooldownPair(player, animalType)) != null;
-     }
+@@ -199,6 +201,7 @@ public abstract class World implements GeneratorAccess, AutoCloseable {
+         this.paperConfig = new com.destroystokyo.paper.PaperWorldConfig(((WorldDataServer) worlddatamutable).getName(), this.spigotConfig); // Paper
+         this.tuinityConfig = new com.tuinity.tuinity.config.TuinityConfig.WorldConfig(((WorldDataServer)worlddatamutable).getName()); // Tuinity - Server Config
+         this.purpurConfig = new net.pl3x.purpur.PurpurWorldConfig(((WorldDataServer) worlddatamutable).getName(), env); // Purpur
 +        this.origamiConfig = new de.minebench.origami.OrigamiConfig.WorldConfig(((WorldDataServer)worlddatamutable).getName()); // Origami - World Config
- 
-     void addBreedingCooldown(java.util.UUID player, Class<? extends EntityAnimal> animalType) {
-         this.playerBreedingCooldowns.put(new BreedingCooldownPair(player, animalType), new Object());
+         this.playerBreedingCooldowns = this.getNewBreedingCooldownCache(); // Purpur
+         this.chunkPacketBlockController = this.paperConfig.antiXray ? new ChunkPacketBlockControllerAntiXray(this, executor) : ChunkPacketBlockController.NO_OPERATION_INSTANCE; // Paper - Anti-Xray
+         this.generator = gen;
 diff --git a/src/main/java/org/bukkit/craftbukkit/CraftServer.java b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-index b3bc2d908a028fe182f4be2ed4d2bb6a1e9ec5cb..ea94b5362605a0deca79b67e30988af25c3c179f 100644
+index b3bc2d908a028fe182f4be2ed4d2bb6a1e9ec5cb..2c899d7e4676d3ca164e8072976985a2b88376cb 100644
 --- a/src/main/java/org/bukkit/craftbukkit/CraftServer.java
 +++ b/src/main/java/org/bukkit/craftbukkit/CraftServer.java
-@@ -855,6 +855,7 @@ public final class CraftServer implements Server {
-         }
-         try {
-             playerList.getProfileBans().load();
-+        de.minebench.origami.OrigamiConfig.init((File) console.options.valueOf("origami-settings")); // Origami - Server Config
-         } catch (IOException ex) {
-             logger.log(Level.WARNING, "Failed to load banned-players.json, " + ex.getMessage());
-         }
-@@ -889,6 +890,7 @@ public final class CraftServer implements Server {
-             } else {
-                 world.ticksPerWaterAmbientSpawns = this.getTicksPerWaterAmbientSpawns();
-             }
+@@ -863,6 +863,7 @@ public final class CraftServer implements Server {
+         com.destroystokyo.paper.PaperConfig.init((File) console.options.valueOf("paper-settings")); // Paper
+         com.tuinity.tuinity.config.TuinityConfig.init((File) console.options.valueOf("tuinity-settings")); // Tuinity - Server Config
+         net.pl3x.purpur.PurpurConfig.init((File) console.options.valueOf("purpur-settings")); // Purpur
++        de.minebench.origami.OrigamiConfig.init((java.io.File) options.valueOf("origami-settings")); // Origami - Server Config
+         for (WorldServer world : console.getWorlds()) {
+             world.worldDataServer.setDifficulty(config.difficulty);
+             world.setSpawnFlags(config.spawnMonsters, config.spawnAnimals);
+@@ -899,6 +900,7 @@ public final class CraftServer implements Server {
+             world.paperConfig.init(); // Paper
+             world.tuinityConfig.init(); // Tuinity - Server Config
+             world.purpurConfig.init(); // Purpur
 +            world.origamiConfig.init(); // Origami - World Config
+         }
  
-             if (this.getTicksPerAmbientSpawns() < 0) {
-                 world.ticksPerAmbientSpawns = 1;
+         Plugin[] pluginClone = pluginManager.getPlugins().clone(); // Paper
 diff --git a/src/main/java/org/bukkit/craftbukkit/Main.java b/src/main/java/org/bukkit/craftbukkit/Main.java
 index b10873022efc8f01ef172e86cad07831d7bf0d5e..448538cc8a3d16b028a0a6f0f05c9370a02f4259 100644
 --- a/src/main/java/org/bukkit/craftbukkit/Main.java

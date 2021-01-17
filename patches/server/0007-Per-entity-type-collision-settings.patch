@@ -14,10 +14,10 @@ The whole code is based around 1 class, the EntityFilter class. Whole filtering 
 Co-authored-by: tr7zw <tr7zw@live.de>
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index 67d7dd29da85024aeb472dc115c730feda6e4562..1e5e4595e0e783caa3f3041d8e8a3542bbbaca01 100644
+index 8c9b87b8c54a35052f78c9e95f9b48fca4661d5d..44263b49a10852c05171d7b05162fe1b5f6c7f16 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
-@@ -135,6 +135,39 @@ public final class OrigamiConfig {
+@@ -136,6 +136,39 @@ public final class OrigamiConfig {
          private void pigmenDontTargetUnlessHit() {
              pigmenDontTargetUnlessHit = getBoolean("pigmen.dont-target-unless-hit", pigmenDontTargetUnlessHit);
          }

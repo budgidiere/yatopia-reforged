@@ -5,7 +5,7 @@ Subject: [PATCH] Redirect Configs
 
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index 1e5e4595e0e783caa3f3041d8e8a3542bbbaca01..22f40ac0db379615240af66237e98bec02516fe3 100644
+index 44263b49a10852c05171d7b05162fe1b5f6c7f16..ca43742010a6407a750f1490ade012a440d52f85 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
 @@ -20,6 +20,8 @@ public final class OrigamiConfig {

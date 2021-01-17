@@ -5,18 +5,10 @@ Subject: [PATCH] Nuke streams off BlockPosition
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockBase.java b/src/main/java/net/minecraft/server/BlockBase.java
-index 8724ad342bec7c733b3c825bd62dbfa5c28c06dd..5cf27f2289cccecb6406b16379fb8ee533bac86e 100644
+index 8724ad342bec7c733b3c825bd62dbfa5c28c06dd..9907047028b754fe0e314a7d5c5238ce4286c373 100644
 --- a/src/main/java/net/minecraft/server/BlockBase.java
 +++ b/src/main/java/net/minecraft/server/BlockBase.java
-@@ -642,6 +642,7 @@ public abstract class BlockBase {
- 
-         public EnumInteractionResult interact(World world, EntityHuman entityhuman, EnumHand enumhand, MovingObjectPositionBlock movingobjectpositionblock) {
-             return this.getBlock().interact(this.p(), world, movingobjectpositionblock.getBlockPosition(), entityhuman, enumhand, movingobjectpositionblock);
-+        public final boolean isBlock(Block block) { return a(block); } // Yatopia - OBFHELPER
-         }
- 
-         public void attack(World world, BlockPosition blockposition, EntityHuman entityhuman) {
-@@ -681,6 +682,7 @@ public abstract class BlockBase {
+@@ -681,6 +681,7 @@ public abstract class BlockBase {
              return this.getBlock().getInventory(this.p(), world, blockposition);
          }
  

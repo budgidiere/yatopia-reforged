@@ -20,7 +20,7 @@ index 96aaaab5b7685c874463505f9d25e8a0a01a6e7c..5bcbf2e5ee02764425802a4113d28d03
 +    // Origami end
  }
 diff --git a/src/main/java/net/minecraft/server/Behavior.java b/src/main/java/net/minecraft/server/Behavior.java
-index 0b9d469a92decfb0632805791868ef7faa88c535..8f480862f0f3980963019264769887a511a5f88b 100644
+index 0b9d469a92decfb0632805791868ef7faa88c535..4dbbb2aeff02af0ae40a0c3dbd8845da25465ade 100644
 --- a/src/main/java/net/minecraft/server/Behavior.java
 +++ b/src/main/java/net/minecraft/server/Behavior.java
 @@ -9,6 +9,7 @@ public abstract class Behavior<E extends EntityLiving> {
@@ -31,16 +31,17 @@ index 0b9d469a92decfb0632805791868ef7faa88c535..8f480862f0f3980963019264769887a5
      private final int d;
      private final int e;
  
-@@ -31,13 +32,18 @@ public abstract class Behavior<E extends EntityLiving> {
-         return this.b;
-     }
- 
+@@ -25,6 +26,9 @@ public abstract class Behavior<E extends EntityLiving> {
+         this.d = i;
+         this.e = j;
+         this.a = map;
 +        // Origami start - behavior timing
 +        timing = co.aikar.timings.WorldTimingsHandler.getBehaviorTimings(key);
 +        // Origami end
-     public final boolean e(WorldServer worldserver, E e0, long i) {
-         if (this.a(e0) && this.a(worldserver, e0)) {
-             this.b = Behavior.Status.RUNNING;
+     }
+ 
+     public Behavior.Status a() {
+@@ -37,7 +41,9 @@ public abstract class Behavior<E extends EntityLiving> {
              int j = this.d + worldserver.getRandom().nextInt(this.e + 1 - this.d);
  
              this.c = i + (long) j;

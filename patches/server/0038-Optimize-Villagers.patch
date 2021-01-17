@@ -69,7 +69,7 @@ index 8d445e9c0875db6cf45e4d8bcfce7cd3d5094d94..4afe59084b85f466c8fb2fac2ac77e50
              }
          }
 diff --git a/src/main/java/net/minecraft/server/VillagePlaceType.java b/src/main/java/net/minecraft/server/VillagePlaceType.java
-index b6b4c8c491d692f93d2c38d602ff99b0611b72aa..21b3e93be9941185832d6bd752a5a77a53486a95 100644
+index b6b4c8c491d692f93d2c38d602ff99b0611b72aa..082b060407f2424c10f865e23feb60b970b851cb 100644
 --- a/src/main/java/net/minecraft/server/VillagePlaceType.java
 +++ b/src/main/java/net/minecraft/server/VillagePlaceType.java
 @@ -14,11 +14,20 @@ import java.util.stream.Collectors;
@@ -94,14 +94,6 @@ index b6b4c8c491d692f93d2c38d602ff99b0611b72aa..21b3e93be9941185832d6bd752a5a77a
      };
      public static final Predicate<VillagePlaceType> b = (villageplacetype) -> {
          return true;
-@@ -77,6 +86,7 @@ public class VillagePlaceType {
-             return villageplacetype == this;
-         };
-         this.F = j;
-+    public final Predicate<VillagePlaceType> getCompletionCondition() { return c(); } // Yatopia - OBFHELPER
-     }
- 
-     public int b() {
 diff --git a/src/main/java/net/minecraft/server/VillagerProfession.java b/src/main/java/net/minecraft/server/VillagerProfession.java
 index 6493f220a0cf627e82e5f3f3c85e9934d9a9ebae..f4c8ba2d94e5875197b674a0e39e997b45186d63 100644
 --- a/src/main/java/net/minecraft/server/VillagerProfession.java
