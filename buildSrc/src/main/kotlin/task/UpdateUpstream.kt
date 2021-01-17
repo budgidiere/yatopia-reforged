@@ -212,8 +212,8 @@ fun patchHasDiff(
         else { line.substring(1, line.length).trim().isNotBlank() } }
         .filter {line -> if (repoFile.contains(line)) {
             repoFile.remove(line)
-            return@filter true
-        } else { return@filter false } }.collect(Collectors.toList()).isNotEmpty()
+            return@filter false
+        } else { return@filter true } }.collect(Collectors.toList()).isNotEmpty()
 }
 
 fun patchChanged(
