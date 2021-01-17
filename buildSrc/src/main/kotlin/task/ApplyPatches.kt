@@ -27,7 +27,6 @@ internal fun Project.createApplyPatchesTask(
             .takeIf { it.isNotEmpty() } ?: return true
         val patches = patchPaths.map { it.absolutePath }.toTypedArray()
 
-
         logger.lifecycle(">>> Applying $applyName patches to $name")
 
         gitCmd("am", "--abort")
@@ -75,12 +74,14 @@ internal fun Project.createApplyPatchesTask(
 
             for (upstream in upstreams) {
                 if (((folder == "server" && upstream.serverList?.isEmpty() != false) || (folder == "api" && upstream.apiList?.isEmpty() != false)) && !upstream.useBlackList) continue
+                project.gitCmd("branch", "-D", "${upstream.name}-$folder", dir = projectDir)
                 project.gitCmd("checkout", "-b", "${upstream.name}-$folder", dir = projectDir)
                 // Apply patches
                 val patchDir = Path.of("${upstream.patchPath}/$folder")
 
                 if (applyPatches(patchDir, upstream.name, name, wasGitSigningEnabled, projectDir)) continue
             }
+            project.gitCmd("branch", "-D", "$forkName-$folder", dir = projectDir)
             project.gitCmd("checkout", "-b", "$forkName-$folder", dir = projectDir)
             val patchDir = patchesDir.toPath()
             // Apply patches

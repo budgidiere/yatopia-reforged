@@ -5,7 +5,7 @@ Subject: [PATCH] Infinity No Arrows
 
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 081a03330c8a42a48b142fd8d921805ce3b2b719..3def9302bb9bc8cad315d1494bfd38746ece9559 100644
+index c9f490e4e4e7a5a3a9ad99f864ff8fb2acc5b5b2..b3c76fcf65b028e4aa53699ee93a5c3ba59981f2 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -2179,7 +2179,7 @@ public abstract class EntityHuman extends EntityLiving {

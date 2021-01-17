@@ -6,7 +6,7 @@ Subject: [PATCH] PlayerAttackEntityEvent
 Added per request
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 434cfd0a224a8dc1f13809edcd4b98f0c7aa0899..769866d263018c6eb33e15c312c7fe061b18be93 100644
+index 434cfd0a224a8dc1f13809edcd4b98f0c7aa0899..d2b3db34d69269a220185d203bc1232042a9e437 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -1071,12 +1071,50 @@ public abstract class EntityHuman extends EntityLiving {
@@ -21,7 +21,7 @@ index 434cfd0a224a8dc1f13809edcd4b98f0c7aa0899..769866d263018c6eb33e15c312c7fe06
 +                         this.isCritical = true; // Purpur
 +                         f *= 1.5F;
 +                     }
-+ 
++
 +                     f += f1;
 +                     */
 +                    net.yatopia.api.event.PlayerAttackEntityEvent playerAttackEntityEvent =

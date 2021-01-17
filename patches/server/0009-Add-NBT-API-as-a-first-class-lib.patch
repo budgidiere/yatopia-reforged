@@ -5,7 +5,7 @@ Subject: [PATCH] Add NBT API as a first-class lib
 
 
 diff --git a/pom.xml b/pom.xml
-index fecd28e4f319da6476625f358de59312af23f70b..3297d30e84c54192b89e6607bdfee78349291a57 100644
+index 9e4efab7e0dbd09dc12210e37fc6744672282e9b..888f257b47b1d55287b1f67ffaffc5030c15616c 100644
 --- a/pom.xml
 +++ b/pom.xml
 @@ -358,6 +358,10 @@

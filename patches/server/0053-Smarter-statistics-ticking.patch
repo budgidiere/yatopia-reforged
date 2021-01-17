@@ -8,7 +8,7 @@ In vanilla, statistics that count time spent for an action (i.e. time played or 
 With an interval of 20, this patch saves roughly 3ms per tick on a server w/ 80 players online.
 
 diff --git a/src/main/java/net/minecraft/server/EntityHuman.java b/src/main/java/net/minecraft/server/EntityHuman.java
-index 769866d263018c6eb33e15c312c7fe061b18be93..081a03330c8a42a48b142fd8d921805ce3b2b719 100644
+index d2b3db34d69269a220185d203bc1232042a9e437..c9f490e4e4e7a5a3a9ad99f864ff8fb2acc5b5b2 100644
 --- a/src/main/java/net/minecraft/server/EntityHuman.java
 +++ b/src/main/java/net/minecraft/server/EntityHuman.java
 @@ -175,18 +175,23 @@ public abstract class EntityHuman extends EntityLiving {
