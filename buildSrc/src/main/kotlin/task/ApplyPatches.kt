@@ -33,7 +33,7 @@ internal fun Project.createApplyPatchesTask(
         gitCmd("am", "--abort")
 
         //Cursed Apply Mode that makes fixing stuff a lot easier
-        if (true) {
+        if (false) {
             for (patch in patches) {
                 val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
                     "--rerere-autoupdate", "--whitespace=fix", "--reject", "-C0", patch)
