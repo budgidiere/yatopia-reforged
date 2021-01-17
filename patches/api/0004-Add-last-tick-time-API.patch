@@ -26,10 +26,10 @@ index ba8eb67291c9848b367419f4c8110161ac7fab0d..c3ffbb86d2e61c15e5cf7cd2c6b381c3
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 26c1953d23efd370ac7fd47fc3432edba4724139..ccd52a5501411e79c10e4f06b4ea657d85756921 100644
+index a3fe9017bbecafe6d85dac992f4a1b154c823f0e..d26d90d5a6a8c7ad4e165c1c5d32123a7bca34fc 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
-@@ -1621,4 +1621,24 @@ public interface Server extends PluginMessageRecipient {
+@@ -1637,4 +1637,24 @@ public interface Server extends PluginMessageRecipient {
       */
      boolean isLagging();
      // Purpur end
