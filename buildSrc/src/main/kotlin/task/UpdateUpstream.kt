@@ -207,9 +207,15 @@ fun patchHasDiff(
     val upstreamFile = Files.readAllLines(Path.of("${upstream.repoPath}/patches/$folder/${String.format("%04d", serverRepoPatches.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
     val repoFile = Files.readAllLines(Path.of("${upstream.patchPath}/tmp/$folder/${String.format("%04d", currentPatchListFiltered.indexOf(patch) + 1)}-$patch"), StandardCharsets.UTF_8)
     return upstreamFile.stream().filter {line -> line.startsWith("+") || line.startsWith("-")}
-        .filter {line -> if (line.startsWith("---") || line.startsWith("+++")) {line.substring(3, line.length).trim().isBlank()}
-        else if (line.startsWith("--") || line.startsWith("++")) {line.substring(2, line.length).trim().isBlank()}
-        else { line.substring(1, line.length).trim().isNotBlank() } }
+        .filter {line -> if (line.startsWith("---") || line.startsWith("+++")) {
+            line.substring(3, line.length).trim().isNotBlank()
+        }
+        else if (line.startsWith("--") || line.startsWith("++")) {
+            line.substring(2, line.length).trim().isNotBlank()
+        }
+        else {
+            line.substring(1, line.length).trim().isNotBlank()
+        } }
         .filter {line -> if (repoFile.contains(line)) {
             repoFile.remove(line)
             return@filter false
