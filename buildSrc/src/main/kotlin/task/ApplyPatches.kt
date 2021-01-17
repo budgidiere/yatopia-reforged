@@ -56,6 +56,7 @@ internal fun Project.createApplyPatchesTask(
             val wasGitSigningEnabled = temporarilyDisableGitSigning(projectDir)
 
             for (upstream in upstreams) {
+                if (folder == "server" && upstream.serverList?.isEmpty() != false || folder == "api" && upstream.apiList?.isEmpty() != false) continue
                 project.gitCmd("checkout", "-b", "${upstream.name}-$folder", dir = projectDir)
                 // Apply patches
                 val patchDir = Path.of("${upstream.patchPath}/$folder")
