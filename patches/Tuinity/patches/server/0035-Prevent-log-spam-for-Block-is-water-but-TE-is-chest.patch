@@ -7,15 +7,15 @@ Happens when breaking a waterlogged chest.
 Fix is to just not validate the TE while the chest is being removed.
 
 diff --git a/src/main/java/net/minecraft/server/BlockChest.java b/src/main/java/net/minecraft/server/BlockChest.java
-index 12a0230448dd8d56f6dc20e23cacaf0b8a9433d1..9e5e6de52efabe9126f6c47acb35fa1dc461ff4f 100644
+index c4ff93a6b908c1bd157c7fe45b504909b189d09c..85c83c21a52c192be89dcf4d926748624b9bac65 100644
 --- a/src/main/java/net/minecraft/server/BlockChest.java
 +++ b/src/main/java/net/minecraft/server/BlockChest.java
-@@ -195,7 +195,7 @@ public class BlockChest extends BlockChestAbstract<TileEntityChest> implements I
+@@ -183,7 +183,7 @@ public class BlockChest extends BlockChestAbstract<TileEntityChest> implements I
      @Override
-     public void remove(IBlockData iblockdata, World world, BlockPosition blockposition, IBlockData iblockdata1, boolean flag) {
-         if (!iblockdata.a(iblockdata1.getBlock())) {
+     public void postPlace(World world, BlockPosition blockposition, IBlockData iblockdata, EntityLiving entityliving, ItemStack itemstack) {
+         if (itemstack.hasName()) {
 -            TileEntity tileentity = world.getTileEntity(blockposition);
 +            TileEntity tileentity = world.getTileEntity(blockposition, false); // Tuinity - block has since changed.
  
-             if (tileentity instanceof IInventory) {
-                 InventoryUtils.dropInventory(world, blockposition, (IInventory) tileentity);
+             if (tileentity instanceof TileEntityChest) {
+                 ((TileEntityChest) tileentity).setCustomName(itemstack.getName());

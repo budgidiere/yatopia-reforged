@@ -5,7 +5,7 @@ Subject: [PATCH] Option for chests to open even with a solid block on top
 
 
 diff --git a/src/main/java/net/minecraft/server/BlockChest.java b/src/main/java/net/minecraft/server/BlockChest.java
-index 9e5e6de52efabe9126f6c47acb35fa1dc461ff4f..487b281cf53d3482853d56ee1e90a329d516395f 100644
+index 85c83c21a52c192be89dcf4d926748624b9bac65..0b14c1eac94837b3c7ef285ee0a9d98edcf8063d 100644
 --- a/src/main/java/net/minecraft/server/BlockChest.java
 +++ b/src/main/java/net/minecraft/server/BlockChest.java
 @@ -262,6 +262,7 @@ public class BlockChest extends BlockChestAbstract<TileEntityChest> implements I
