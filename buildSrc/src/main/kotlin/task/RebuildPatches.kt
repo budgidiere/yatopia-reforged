@@ -19,7 +19,7 @@ internal fun Project.createRebuildPatchesTask(
     doLast {
         for ((name, subproject) in toothpick.subprojects) {
             val (sourceRepo, projectDir, patchesDir) = subproject
-            val previousUpstreamName = "origin/master"
+            var previousUpstreamName = "origin/master"
             val folder = (if (patchesDir.endsWith("server")) "server" else "api")
 
             for (upstream in upstreams) {
@@ -30,6 +30,8 @@ internal fun Project.createRebuildPatchesTask(
                 }
 
                 logger.lifecycle(">>> Rebuilding patches for ${upstream.name}")
+
+                if (patchPath.listFiles().isEmpty()) continue
 
                 // Nuke old patches
                 patchPath.listFiles()
@@ -45,6 +47,7 @@ internal fun Project.createRebuildPatchesTask(
                         printOut = true
                     )
                 )
+                previousUpstreamName = "${upstream.name}-$folder"
             }
             ensureSuccess(gitCmd("checkout", "$forkName-$folder", dir = projectDir))
             if (!patchesDir.exists()) {
@@ -63,7 +66,7 @@ internal fun Project.createRebuildPatchesTask(
                 gitCmd(
                     "format-patch",
                     "--no-stat", "--zero-commit", "--full-index", "--no-signature", "-N",
-                    "-o", patchesDir.absolutePath, "origin/master",
+                    "-o", patchesDir.absolutePath, previousUpstreamName,
                     dir = projectDir,
                     printOut = true
                 )
