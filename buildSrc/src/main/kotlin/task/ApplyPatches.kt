@@ -37,12 +37,10 @@ internal fun Project.createApplyPatchesTask(
                 val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
                     "--rerere-autoupdate", "--whitespace=fix", "--reject", "-C0", patch)
                 if (gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true).exitCode != 0) {
-                    System.out.println("test")
                     gitCmd("add", ".", dir = projectDir, printOut = true)
                     gitCmd("am", "--continue", dir = projectDir, printOut = true)
                 }
             }
-
         } else {
             val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
                 "--rerere-autoupdate", "--whitespace=fix",  *patches)
