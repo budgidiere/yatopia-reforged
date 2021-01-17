@@ -6,7 +6,7 @@ Subject: [PATCH] Add ChatColor.getById
 Bukkit has had a map of this for years and it was totally unused...
 
 diff --git a/src/main/java/org/bukkit/ChatColor.java b/src/main/java/org/bukkit/ChatColor.java
-index 499b222dee1f11d497a29a9a263a5596401ca1eb..15a5f78d8222846ce1a8ce12f405610509718abb 100644
+index 499b222dee1f11d497a29a9a263a5596401ca1eb..c6df76ea58f131ed066fa3cbf2808e6e79785743 100644
 --- a/src/main/java/org/bukkit/ChatColor.java
 +++ b/src/main/java/org/bukkit/ChatColor.java
 @@ -263,6 +263,15 @@ public enum ChatColor {
@@ -25,7 +25,7 @@ index 499b222dee1f11d497a29a9a263a5596401ca1eb..15a5f78d8222846ce1a8ce12f4056105
      /**
       * Gets the char value associated with this color
       *
-@@ -296,6 +305,17 @@ public enum ChatColor {
+@@ -296,6 +305,18 @@ public enum ChatColor {
          return !isFormat && this != RESET;
      }
  
@@ -36,6 +36,7 @@ index 499b222dee1f11d497a29a9a263a5596401ca1eb..15a5f78d8222846ce1a8ce12f4056105
 +     * @return Associative {@link org.bukkit.ChatColor} with the given id,
 +     *     or null if it doesn't exist
 +     */
++    @Nullable // Yatopia
 +    public static ChatColor getById(int id) {
 +        return BY_ID.get(id);
 +    }
