@@ -24,20 +24,18 @@ internal fun Project.configureSubprojects() {
         apply<JavaLibraryPlugin>()
         apply<MavenPublishPlugin>()
 
-        tasks.getting(JavaCompile::class) {
+        tasks.withType<JavaCompile> {
             options.encoding = UTF_8.name()
         }
-        tasks.getting(Javadoc::class) {
+        tasks.withType<Javadoc> {
             options.encoding = UTF_8.name()
         }
 
-        extensions.configure(PublishingExtension::class.java) {
+        extensions.configure<PublishingExtension> {
             publications {
                 create<MavenPublication>("mavenJava") {
-                    artifactId = if (project.name.endsWith("server")) rootProject.name else project.name
                     groupId = rootProject.group as String
                     version = rootProject.version as String
-                    from(components["java"])
                     pom {
                         name.set(project.name)
                         url.set(toothpick.forkUrl)
@@ -67,6 +65,7 @@ private fun Project.configureServerProject() {
     }
 
     val shadowJar by tasks.getting(ShadowJar::class) {
+        archiveClassifier.set("") // ShadowJar is the main server artifact
         dependsOn(generatePomFileForMavenJavaPublication)
         transform(Log4j2PluginsCacheFileTransformer::class.java)
         mergeServiceFiles()
@@ -119,6 +118,15 @@ private fun Project.configureServerProject() {
     tasks.getByName("build") {
         dependsOn(shadowJar)
     }
+
+    extensions.configure<PublishingExtension> {
+        publications {
+            getByName<MavenPublication>("mavenJava") {
+                artifactId = rootProject.name
+                artifact(tasks["shadowJar"])
+            }
+        }
+    }
 }
 
 @Suppress("UNUSED_VARIABLE")
@@ -133,6 +141,15 @@ private fun Project.configureApiProject() {
         }
         manifest {
             attributes("Automatic-Module-Name" to "org.bukkit")
+        }
+    }
+
+    extensions.configure<PublishingExtension> {
+        publications {
+            getByName<MavenPublication>("mavenJava") {
+                artifactId = project.name
+                from(components["java"])
+            }
         }
     }
 }
