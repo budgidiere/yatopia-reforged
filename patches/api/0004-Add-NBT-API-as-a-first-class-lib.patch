@@ -98,13 +98,13 @@ index 3b10fcc13893403b29f0260b8605144679e89b82..1e9a96d8b08cc396acf73dc420830093
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/bukkit/entity/Entity.java b/src/main/java/org/bukkit/entity/Entity.java
-index 08dbe8208fad174f03a0e08c26bb48a0729ec0ce..3f7b8f1098c482560d480b80b591d3df059801db 100644
+index 08dbe8208fad174f03a0e08c26bb48a0729ec0ce..d83e9814878ff185e659dfaabc2175d1577db0e1 100644
 --- a/src/main/java/org/bukkit/entity/Entity.java
 +++ b/src/main/java/org/bukkit/entity/Entity.java
-@@ -692,6 +692,28 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
-      *
-      * @return True if entity is in water or bubble column
+@@ -746,4 +746,26 @@ public interface Entity extends Metadatable, CommandSender, Nameable, Persistent
       */
+     boolean isRidableInWater();
+     // Purpur end
 +
 +    // Yatopia start
 +    /**
@@ -127,17 +127,15 @@ index 08dbe8208fad174f03a0e08c26bb48a0729ec0ce..3f7b8f1098c482560d480b80b591d3df
 +        return getNBT().getPersistentDataContainer();
 +    }
 +    // Yatopia end
-     public boolean isInWaterOrBubbleColumn();
- 
-     /**
+ }
 diff --git a/src/main/java/org/bukkit/inventory/ItemStack.java b/src/main/java/org/bukkit/inventory/ItemStack.java
-index 23cef1e67236a879525f39da994efc9a9c5cd289..58b9cf56c5d788a78587886a543097fa69c2d9cd 100644
+index 23cef1e67236a879525f39da994efc9a9c5cd289..a666626d9658f9a7f784514d34794a2ecb944ac9 100644
 --- a/src/main/java/org/bukkit/inventory/ItemStack.java
 +++ b/src/main/java/org/bukkit/inventory/ItemStack.java
-@@ -786,6 +786,44 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
-      * Get current set itemFlags. The collection returned is unmodifiable.
-      *
-      * @return A set of all itemFlags set
+@@ -1427,4 +1427,42 @@ public class ItemStack implements Cloneable, ConfigurationSerializable {
+     }
+ 
+     // Purpur end
 +
 +    // Yatopia start
 +    /**
@@ -176,6 +174,4 @@ index 23cef1e67236a879525f39da994efc9a9c5cd289..58b9cf56c5d788a78587886a543097fa
 +        setItemMeta(nbtItem.getItemMeta());
 +    }
 +    // Yatopia end
-      */
-     @NotNull
-     public Set<ItemFlag> getItemFlags() {
+ }
