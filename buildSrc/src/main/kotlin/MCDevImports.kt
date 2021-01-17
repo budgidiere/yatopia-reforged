@@ -21,8 +21,8 @@ data class LibraryImport(val group: String, val library: String, val prefix: Str
  * Changes to this set should be committed to the repo, as these won't be automatically imported.
  */
 val libraryImports = setOf<LibraryImport>(
-//    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier", "CommandDispatcher"),
-//    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/tree", "LiteralCommandNode"),
-//    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/suggestion", "SuggestionsBuilder"),
-//    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/arguments", "BoolArgumentType")
+    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier", "CommandDispatcher"),
+    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/tree", "LiteralCommandNode"),
+    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/suggestion", "SuggestionsBuilder"),
+    LibraryImport("com.mojang", "brigadier", "com/mojang/brigadier/arguments", "BoolArgumentType")
 )

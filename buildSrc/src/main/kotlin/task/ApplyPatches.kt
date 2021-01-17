@@ -30,7 +30,8 @@ internal fun Project.createApplyPatchesTask(
 
         logger.lifecycle(">>> Applying $applyName patches to $name")
 
-        val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace", *patches)
+        val gitCommand = arrayListOf("am", "--3way", "--ignore-whitespace",
+            "--rerere-autoupdate", "--whitespace=fix",  *patches)
         ensureSuccess(gitCmd(*gitCommand.toTypedArray(), dir = projectDir, printOut = true)) {
             if (wasGitSigningEnabled) reEnableGitSigning(projectDir)
         }
@@ -56,7 +57,7 @@ internal fun Project.createApplyPatchesTask(
             val wasGitSigningEnabled = temporarilyDisableGitSigning(projectDir)
 
             for (upstream in upstreams) {
-                if (folder == "server" && upstream.serverList?.isEmpty() != false || folder == "api" && upstream.apiList?.isEmpty() != false) continue
+                if (((folder == "server" && upstream.serverList?.isEmpty() != false) || (folder == "api" && upstream.apiList?.isEmpty() != false)) && !upstream.useBlackList) continue
                 project.gitCmd("checkout", "-b", "${upstream.name}-$folder", dir = projectDir)
                 // Apply patches
                 val patchDir = Path.of("${upstream.patchPath}/$folder")
