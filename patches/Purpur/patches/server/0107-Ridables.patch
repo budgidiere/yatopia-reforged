@@ -1979,7 +1979,7 @@ index f6797925365836b6c2d3d2c48c746a4d58e28bf3..548ff4449faca0abdf72487276fe4920
  
      @Override
 diff --git a/src/main/java/net/minecraft/server/EntityHorse.java b/src/main/java/net/minecraft/server/EntityHorse.java
-index e0e60bb6d853e27a3495a8de9018e547a68ff726..0415a4d1f328f117ee676156114acb3599aec202 100644
+index f958751b16abcc36910bb0b655ff2360459e2e4c..4ffc61acdff8c51dc9b111e3024c828fb5386118 100644
 --- a/src/main/java/net/minecraft/server/EntityHorse.java
 +++ b/src/main/java/net/minecraft/server/EntityHorse.java
 @@ -12,6 +12,13 @@ public class EntityHorse extends EntityHorseAbstract {

@@ -718,7 +718,7 @@ index 0b40c2f4dada7d8432e3f91e9cf206c2bda3b24b..6eaf9fc9cc93f79a497b07a3549d459b
      private int c;
      private final Runnable d;
 diff --git a/src/main/java/net/minecraft/server/VillagePlaceSection.java b/src/main/java/net/minecraft/server/VillagePlaceSection.java
-index 77c66bc9952542d2444b402896a3d9f622ca2ff9..f43bc1f7d693d63c6bbdba976c048d2d0c8767b1 100644
+index b86963aa34b5ae479f924c5a52afc5b5b66dba76..943a437ff27162eae09211c28bdc0d141fa6a404 100644
 --- a/src/main/java/net/minecraft/server/VillagePlaceSection.java
 +++ b/src/main/java/net/minecraft/server/VillagePlaceSection.java
 @@ -23,12 +23,12 @@ public class VillagePlaceSection {

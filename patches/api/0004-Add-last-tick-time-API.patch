@@ -26,7 +26,7 @@ index ba8eb67291c9848b367419f4c8110161ac7fab0d..c3ffbb86d2e61c15e5cf7cd2c6b381c3
 +    // Yatopia end
  }
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index a3fe9017bbecafe6d85dac992f4a1b154c823f0e..d26d90d5a6a8c7ad4e165c1c5d32123a7bca34fc 100644
+index 5b15169e967803803164f4d3c7f6327f4e2de4a3..10cab1b0939d54bcd2b351c2317baf5ce5e97684 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1637,4 +1637,24 @@ public interface Server extends PluginMessageRecipient {

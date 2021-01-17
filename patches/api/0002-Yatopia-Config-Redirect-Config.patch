@@ -5,7 +5,7 @@ Subject: [PATCH] Yatopia Config & Redirect Config
 
 
 diff --git a/src/main/java/org/bukkit/Server.java b/src/main/java/org/bukkit/Server.java
-index 26c1953d23efd370ac7fd47fc3432edba4724139..a3fe9017bbecafe6d85dac992f4a1b154c823f0e 100644
+index 26c1953d23efd370ac7fd47fc3432edba4724139..5b15169e967803803164f4d3c7f6327f4e2de4a3 100644
 --- a/src/main/java/org/bukkit/Server.java
 +++ b/src/main/java/org/bukkit/Server.java
 @@ -1505,6 +1505,22 @@ public interface Server extends PluginMessageRecipient {
@@ -19,7 +19,7 @@ index 26c1953d23efd370ac7fd47fc3432edba4724139..a3fe9017bbecafe6d85dac992f4a1b15
 +            throw new UnsupportedOperationException("Not supported yet.");
 +        }
 +        // Origami end
-+        
++
 +        // Yatopia start - add config to timings report
 +        @NotNull
 +        public org.bukkit.configuration.file.YamlConfiguration getYatopiaConfig()

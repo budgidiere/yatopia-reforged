@@ -5,7 +5,7 @@ Subject: [PATCH] Fix rotating UP/DOWN CW and CCW
 
 
 diff --git a/src/main/java/net/minecraft/server/EnumDirection.java b/src/main/java/net/minecraft/server/EnumDirection.java
-index d4393907773f0d097bda8190b5abde31cd17b2c2..ab699659bfd199662917e961b248a8a7bdb61cfb 100644
+index 813d63335641cd4a33ba548e435861c18156c390..f715383760647920dccb1869aedf7b15c3c000b3 100644
 --- a/src/main/java/net/minecraft/server/EnumDirection.java
 +++ b/src/main/java/net/minecraft/server/EnumDirection.java
 @@ -113,6 +113,12 @@ public enum EnumDirection implements INamable {

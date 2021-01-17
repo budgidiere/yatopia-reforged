@@ -87,7 +87,7 @@ index ef5b4029a4459532c12101f60c6108cbea058425..9b45ab593fba6f108fec7ee2214dda0c
  
          private final Long2ByteMap b = new Long2ByteOpenHashMap();
 diff --git a/src/main/java/net/minecraft/server/VillagePlaceSection.java b/src/main/java/net/minecraft/server/VillagePlaceSection.java
-index f787fd8efd015da99e4ffdb6a1711ef757aa6ba1..91a18a70181d44e0d631b9c072e681c24130302c 100644
+index b4ae140eeddb7e31b6d530e74f3c0736529e00d4..3333795f2bdeedb9482af96cfb0ae4ae7b92f5f8 100644
 --- a/src/main/java/net/minecraft/server/VillagePlaceSection.java
 +++ b/src/main/java/net/minecraft/server/VillagePlaceSection.java
 @@ -69,6 +69,19 @@ public class VillagePlaceSection {
@@ -110,7 +110,7 @@ index f787fd8efd015da99e4ffdb6a1711ef757aa6ba1..91a18a70181d44e0d631b9c072e681c2
      // Yatopia end
      public Stream<VillagePlaceRecord> a(Predicate<VillagePlaceType> predicate, VillagePlace.Occupancy villageplace_occupancy) {
          return this.c.entrySet().stream().filter((entry) -> {
-@@ -174,6 +187,7 @@ public class VillagePlaceSection {
+@@ -180,6 +193,7 @@ public class VillagePlaceSection {
          this.c.clear();
      }
  

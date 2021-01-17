@@ -5,7 +5,7 @@ Subject: [PATCH] Dispensers place anvils option
 
 
 diff --git a/src/main/java/net/minecraft/server/EnumDirection.java b/src/main/java/net/minecraft/server/EnumDirection.java
-index 36aafc3b71013bcec0f4d956761fc2710848b3fd..d4393907773f0d097bda8190b5abde31cd17b2c2 100644
+index 1aa070db60f5473576fb5d056cadde5106766489..813d63335641cd4a33ba548e435861c18156c390 100644
 --- a/src/main/java/net/minecraft/server/EnumDirection.java
 +++ b/src/main/java/net/minecraft/server/EnumDirection.java
 @@ -102,6 +102,7 @@ public enum EnumDirection implements INamable {
