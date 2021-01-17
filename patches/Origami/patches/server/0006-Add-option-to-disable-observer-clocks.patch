@@ -5,7 +5,7 @@ Subject: [PATCH] Add option to disable observer clocks
 
 
 diff --git a/src/main/java/de/minebench/origami/OrigamiConfig.java b/src/main/java/de/minebench/origami/OrigamiConfig.java
-index a5f828228f59fe656f48d1a703a9d06f2a120f5a..c89a216172aa13dac7efe1485ec2e34e1614b06f 100644
+index 70490d7b7e0dd5fbb5ef475c20223670dc8cf1b2..bf6b9f4dbd8c3f649b4e059f41c0e72e0d0f70c6 100644
 --- a/src/main/java/de/minebench/origami/OrigamiConfig.java
 +++ b/src/main/java/de/minebench/origami/OrigamiConfig.java
 @@ -127,6 +127,11 @@ public final class OrigamiConfig {
